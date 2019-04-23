@@ -200,22 +200,22 @@ public:
         }
     }
 
-    float getLength() {
-        return length;
-    }
+    float getLength() { return length; }
 
-    bool isRest() {
-        return is_rest;
-    }
+    bool isRest() { return is_rest; }
 
-    bool isNote() {
-        return pitches.size() == 1;
-    }
+    bool isNote() { return pitches.size() == 1; }
 
-    void extend(float delta) {
-        length += delta;
-    }
+    void extend(float delta) { length += delta; }
+
+    friend Chord& operator<<(Chord &c, Pitch p);
 };
+
+Chord& operator<<(Chord &c, Pitch p) {
+    c.pitches.push_back(p);
+    return c;
+}
+
 
 } // namespace smf
 

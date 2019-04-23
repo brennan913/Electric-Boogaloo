@@ -95,7 +95,7 @@ void operator<<(Track &trk, string s) {
     auto it = tokens.begin();
     while (it < tokens.end()) {
         string tok = *it;
-        Chord c;
+        Chord c{vector<Pitch>{}, chordLength};
 
         if (tok[tok.length() - 1] == '(') {
             // Start specifying note length
@@ -108,7 +108,6 @@ void operator<<(Track &trk, string s) {
             ++it;
         } else {
             if (it->compare(REST) == 0) {
-                // Rest token
                 c = Chord{chordLength};
             } else if (it->find('/') != string::npos) {
                 // Token containing '/' means we're dealing with a chord
@@ -118,11 +117,10 @@ void operator<<(Track &trk, string s) {
                 vector<Pitch> pitches;
                 vector<string> pitch_tokens = tokenize(tok, '/');
                 for (auto& pitch_token: pitch_tokens){
-                    pitches.push_back(Pitch{pitch_token});
+                    c << Pitch{pitch_token};
                 }
-                c = Chord{pitches, chordLength};
             } else {
-                c = Chord{Pitch{tok}, chordLength};
+                c << Pitch{tok};
             }
             while(++it < tokens.end() && it->compare(EXTEND) == 0) {
                 c.extend(chordLength);
