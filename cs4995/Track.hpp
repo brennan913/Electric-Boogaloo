@@ -13,6 +13,7 @@ using std::vector;
 
 int DEFAULT_VELOCITY = 64;
 int DEFAULT_OCTAVE = 5;
+float WHOLE_NOTE_LENGTH = 4.0; // unit is quarter notes
 
 /* unimplemented
 void transformLength(
@@ -31,32 +32,18 @@ private:
         }
     }
 
-    bool changeChordDuration(float &chordLength, vector<string>::iterator tokenIterator) {
-      // Check for note subdivision and parentheses
-      if (tokenIterator->find('(') != string::npos) {
-        // Expected output of the form: { '4', '(' }
-        vector<string> parenths_tokens = tokenize(*tokenIterator, '(');
-
-        // Get the digit in the front as a string, and then as a character
-        char noteDivDigit = parenths_tokens[0][0];
-
-        if (is_note_number(noteDivDigit)) {
-          float wholeNoteLength = 4.0;
-          int noteDivDigitInt = (int) noteDivDigit - '0';
-          // Reminder: quarter notes are manually specified at 4
-          chordLength = wholeNoteLength / noteDivDigitInt;
-        } else {
-          //TODO: Assuming valid input for now
-          std::cerr << "Need number in front of parentheses to specify note duration\n";
-          exit(1);
+    // returns true if changed
+    bool changeChordDuration(float &chordLength, string token) {
+        // Check for note subdivision and parentheses
+        if (token[token.length() - 1] == '(') {
+            int subdivision = std::stoi(token.substr(0, token.length() - 1));
+            chordLength = WHOLE_NOTE_LENGTH / subdivision;
+            return true;
+        } else if (token.compare(")") == 0) {
+            chordLength = 1.0;
+            return true;
         }
-      } else if (tokenIterator->compare(")") == 0) {
-        chordLength = 1.0;
-      } else {
         return false;
-      }
-
-      return true;
     }
 
 public:
@@ -124,7 +111,7 @@ void operator<<(Track &trk, string s) {
         Chord c; // default: quarter rest
 
         // Returns true if a parentheses is found (chordLength is thus also changed)
-        if (trk.changeChordDuration(chordLength, it)) {
+        if (trk.changeChordDuration(chordLength, *it)) {
           // Move the pointer and continue so that we don't write the empty chord
           //   down (which is still a quarter rest)
           ++it;
