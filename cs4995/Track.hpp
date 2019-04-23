@@ -48,11 +48,11 @@ public:
         return chords[index];
     }
 
-    int getVelocity() {
+    int getVelocity() const {
         return velocity;
     }
 
-    int getOctave() {
+    int getOctave() const {
         return octave;
     }
 
@@ -66,26 +66,32 @@ public:
         transformPitch(src.getDifferences(dest));
     }
 
-    friend void operator<<(Track &trk, Chord c);
-    friend void operator<<(Track &trk, const vector<Chord> &c);
-    friend void operator<<(Track &trk, string s);
+    friend Track& operator<<(Track &trk, Chord c);
+    friend Track& operator<<(Track &trk, const vector<Chord> &c);
+    friend Track& operator<<(Track &trk, string s);
+    Track &operator+=(const Track &t2);
+    Track &operator*=(int factor);
+    friend Track operator+(const Track &t1, const Track &t2);
+    friend Track operator*(const Track &t, int factor);
 };
 
-void operator<<(Track &trk, Chord c) {
+Track& operator<<(Track &trk, Chord c) {
     trk.chords.push_back(c);
+    return trk;
 }
 
-void operator<<(Track &trk, const vector<Chord> &cv) {
+Track& operator<<(Track &trk, const vector<Chord> &cv) {
     trk.chords.reserve(trk.chords.size() + cv.size());
     for (Chord c : cv) {
         trk.chords.push_back(c);
     }
+    return trk;
 }
 
-void operator<<(Track &trk, string s) {
+Track& operator<<(Track &trk, string s) {
     vector<string> tokens = tokenize(s, ' ');
     if (tokens.size() == 0) {
-        return;
+        return trk;
     }
 
     // reserve space >= the amount needed
@@ -123,7 +129,48 @@ void operator<<(Track &trk, string s) {
         }
     }
 
-    return;
+    return trk;
+}
+
+Track& Track::operator+=(const Track &t2) {
+    int octaveDiff = t2.octave - this->octave;
+    Track temp{t2};
+    temp.transpose(octaveDiff * OCTAVE_WIDTH);
+    for (Chord c : temp.chords) {
+        this->chords.push_back(c);
+    }
+    return *this;
+}
+
+Track& Track::operator*=(int factor) {
+    if (factor < 0) {
+        std::cerr << "Invalid factor < 0 for operator*=.\n";
+        exit(1);
+    }
+    if (factor == 0) {
+        chords = vector<Chord>{};
+    } else {
+        for (int i = 0; i < factor - 1; i++) {
+            *this += *this;
+        }
+    }
+    return *this;
+}
+
+Track operator+(const Track &t1, const Track &t2) {
+    Track sum{t1};
+    sum += t2;
+    return sum;
+}
+
+Track operator*(const Track &t, int factor) {
+    Track multiple{t};
+    multiple *= factor;
+    return multiple;
+}
+
+Track operator*(int factor, const Track &t) {
+    return t * factor;
 }
 
 } // namespace smf
