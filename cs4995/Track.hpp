@@ -149,7 +149,7 @@ void operator<<(Track &trk, string s) {
 
         } else if (it->compare(REST) == 0) {
             // default chord is quarter rest
-      	    // TODO make rest
+      	    c = Chord{chordLength};
       	}
 
         // does this assume valid input?
