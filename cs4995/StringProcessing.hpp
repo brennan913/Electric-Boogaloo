@@ -51,8 +51,9 @@ vector<string> tokenize_chordstr(string str) {
         start = end;
         end++;
     }
-
-    tokens.push_back(str.substr(start));
+    if (start < str.size()) {
+        tokens.push_back(str.substr(start));
+    }
     return tokens;
 }
 #endif

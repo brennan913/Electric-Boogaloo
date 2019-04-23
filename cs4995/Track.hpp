@@ -95,7 +95,7 @@ void operator<<(Track &trk, string s) {
     auto it = tokens.begin();
     while (it < tokens.end()) {
         string tok = *it;
-        Chord c{vector<Pitch>{}, chordLength};
+        Chord c{chordLength};
 
         if (tok[tok.length() - 1] == '(') {
             // Start specifying note length
@@ -108,7 +108,7 @@ void operator<<(Track &trk, string s) {
             ++it;
         } else {
             if (it->compare(REST) == 0) {
-                c = Chord{chordLength};
+                // Do nothing; a chord without notes is a rest
             } else {
                 // Construct chord using vector of pitches
                 vector<string> pitch_tokens = tokenize_chordstr(tok);

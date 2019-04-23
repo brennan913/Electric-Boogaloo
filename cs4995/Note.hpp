@@ -166,23 +166,21 @@ class Chord {
 private:
     vector<Pitch> pitches;
     float length; // quarter note == 1.0
-    bool is_rest;
 
 public:
 
     // constructs a chord out of a collection of pitches
     Chord(vector<Pitch> pitches, float length = 1.0) :
-        pitches(pitches), length(length), is_rest(false) {}
+        pitches(pitches), length(length) {}
 
     // individual notes are not a special case, just chords
     // with only one pitch
-    Chord(Pitch pitch, float length = 1.0) :
-        pitches(), length(length), is_rest(false)
+    Chord(Pitch pitch, float length = 1.0) : pitches(), length(length)
     {
         pitches.push_back(pitch);
     }
 
-    Chord(float length = 1.0) : length(length), is_rest(true) {}
+    Chord(float length = 1.0) : length(length) {}
 
     vector<Pitch> getPitches() {
         return pitches;
@@ -202,7 +200,7 @@ public:
 
     float getLength() { return length; }
 
-    bool isRest() { return is_rest; }
+    bool isRest() { return pitches.size() == 0; }
 
     bool isNote() { return pitches.size() == 1; }
 
