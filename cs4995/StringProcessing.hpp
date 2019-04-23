@@ -32,12 +32,17 @@ bool is_note_number(char& c) {
 }
 
 // assumes valid input
-// creates new token every time it encounters one of
-// {'A','B','C','D','E','F','G'}
 vector<string> tokenize_chordstr(string str) {
+    // Token containing '/' means we're dealing with a chord
+    // split using / as a delimiter
+    if (str.find('/') != string::npos) {
+        return tokenize(str, '/');
+    }
+
     vector<string> tokens;
     unsigned int start = 0, end = 1;
-
+    // Create new token every time it encounters one of
+    // {'A','B','C','D','E','F','G'}
     while (end < str.size()){
         while (!(is_note_char(str[end])) && end < str.size() ) {
             end++;

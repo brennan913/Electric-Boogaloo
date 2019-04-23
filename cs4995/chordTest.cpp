@@ -9,7 +9,7 @@ int main() {
 
     // create tracks
     Track melody;
-    melody << "C/E/G - B_1/D/G - C/E/A - C/F/A -";
+    melody << "CEG - B_1/D/G - C/E/A - C/F/A -";
 
     // combine tracks
     MidiOutput out;

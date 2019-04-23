@@ -109,18 +109,12 @@ void operator<<(Track &trk, string s) {
         } else {
             if (it->compare(REST) == 0) {
                 c = Chord{chordLength};
-            } else if (it->find('/') != string::npos) {
-                // Token containing '/' means we're dealing with a chord
-                // split using / as a delimiter
-                // construct pitch with each token, then construct chord
-                // using vector of pitches
-                vector<Pitch> pitches;
-                vector<string> pitch_tokens = tokenize(tok, '/');
-                for (auto& pitch_token: pitch_tokens){
+            } else {
+                // Construct chord using vector of pitches
+                vector<string> pitch_tokens = tokenize_chordstr(tok);
+                for (auto& pitch_token: pitch_tokens) {
                     c << Pitch{pitch_token};
                 }
-            } else {
-                c << Pitch{tok};
             }
             while(++it < tokens.end() && it->compare(EXTEND) == 0) {
                 c.extend(chordLength);
