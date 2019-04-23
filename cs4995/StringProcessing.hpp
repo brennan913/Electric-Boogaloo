@@ -34,7 +34,7 @@ bool is_note_number(char& c) {
 // assumes valid input
 // creates new token every time it encounters one of
 // {'A','B','C','D','E','F','G'}
-vector<string> tokenize_chordstr(string str){
+vector<string> tokenize_chordstr(string str) {
     vector<string> tokens;
     unsigned int start = 0, end = 1;
 
