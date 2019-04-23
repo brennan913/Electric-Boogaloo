@@ -32,20 +32,6 @@ private:
         }
     }
 
-    // returns true if changed
-    bool changeChordDuration(float &chordLength, string token) {
-        // Check for note subdivision and parentheses
-        if (token[token.length() - 1] == '(') {
-            int subdivision = std::stoi(token.substr(0, token.length() - 1));
-            chordLength = WHOLE_NOTE_LENGTH / subdivision;
-            return true;
-        } else if (token.compare(")") == 0) {
-            chordLength = 1.0;
-            return true;
-        }
-        return false;
-    }
-
 public:
     Track(int octave = DEFAULT_OCTAVE, int velocity = DEFAULT_VELOCITY) :
         octave(octave), velocity(velocity) {}
@@ -108,42 +94,41 @@ void operator<<(Track &trk, string s) {
     float chordLength = 1.0;
     auto it = tokens.begin();
     while (it < tokens.end()) {
-        Chord c; // default: quarter rest
+        string tok = *it;
+        Chord c;
 
-        // Returns true if a parentheses is found (chordLength is thus also changed)
-        if (trk.changeChordDuration(chordLength, *it)) {
-          // Move the pointer and continue so that we don't write the empty chord
-          //   down (which is still a quarter rest)
-          ++it;
-          continue;
+        if (tok[tok.length() - 1] == '(') {
+            // Start specifying note length
+            int subdivision = std::stoi(tok.substr(0, tok.length() - 1));
+            chordLength = WHOLE_NOTE_LENGTH / subdivision;
+            ++it;
+        } else if (tok.compare(")") == 0) {
+            // Stop specifying note length
+            chordLength = 1.0;
+            ++it;
+        } else {
+            if (it->compare(REST) == 0) {
+                // Rest token
+                c = Chord{chordLength};
+            } else if (it->find('/') != string::npos) {
+                // Token containing '/' means we're dealing with a chord
+                // split using / as a delimiter
+                // construct pitch with each token, then construct chord
+                // using vector of pitches
+                vector<Pitch> pitches;
+                vector<string> pitch_tokens = tokenize(tok, '/');
+                for (auto& pitch_token: pitch_tokens){
+                    pitches.push_back(Pitch{pitch_token});
+                }
+                c = Chord{pitches, chordLength};
+            } else {
+                c = Chord{Pitch{tok}, chordLength};
+            }
+            while(++it < tokens.end() && it->compare(EXTEND) == 0) {
+                c.incrementLength();
+            }
+            trk << c;
         }
-
-        if (it->find('/') != string::npos) {
-            	// assume that containing '/' means we're dealing with a chord
-            	// split using / as a delimiter
-            	// construct pitch with each token, then construct chord
-            	// using vector of pitches
-      		vector<Pitch> pitches;
-      		vector<string> pitch_tokens = tokenize(*it, '/');
-      		for (auto& pitch_token: pitch_tokens){
-      			pitches.push_back(Pitch{pitch_token});
-      		}
-      		c = Chord{pitches, chordLength};
-
-      	// creates single note
-      	} else if (it->compare(REST) != 0) {
-          c = Chord{Pitch{*it}, chordLength};
-
-        } else if (it->compare(REST) == 0) {
-            // default chord is quarter rest
-      	    c = Chord{chordLength};
-      	}
-
-        // does this assume valid input?
-        while(++it < tokens.end() && it->compare(EXTEND) == 0) {
-            c.incrementLength();
-        }
-        trk << c;
     }
 
     return;
