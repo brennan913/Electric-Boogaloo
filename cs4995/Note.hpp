@@ -212,8 +212,8 @@ public:
         return pitches.size() == 1;
     }
 
-    void incrementLength() {
-        length++;
+    void extend(float delta) {
+        length += delta;
     }
 };
 

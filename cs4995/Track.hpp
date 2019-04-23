@@ -125,7 +125,7 @@ void operator<<(Track &trk, string s) {
                 c = Chord{Pitch{tok}, chordLength};
             }
             while(++it < tokens.end() && it->compare(EXTEND) == 0) {
-                c.incrementLength();
+                c.extend(chordLength);
             }
             trk << c;
         }
