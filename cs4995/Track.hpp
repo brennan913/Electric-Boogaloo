@@ -31,25 +31,15 @@ public:
     Track(int octave = DEFAULT_OCTAVE, int velocity = DEFAULT_VELOCITY) :
         octave(octave), velocity(velocity) {}
 
-    const vector<Chord>& getChords() {
-        return chords;
-    }
+    const vector<Chord>& getChords() { return chords; }
 
-    const Chord& operator[](int index) const {
-        return chords[index];
-    }
+    const Chord& operator[](int index) const { return chords[index]; }
 
-    Chord& operator[](int index) {
-        return chords[index];
-    }
+    Chord& operator[](int index) { return chords[index]; }
 
-    int getVelocity() const {
-        return velocity;
-    }
+    int getVelocity() const { return velocity; }
 
-    int getOctave() const {
-        return octave;
-    }
+    int getOctave() const { return octave; }
 
     void transpose(int delta) {
         for (Chord &c : chords) {

@@ -182,9 +182,7 @@ public:
 
     Chord(float length = 1.0) : length(length) {}
 
-    vector<Pitch> getPitches() {
-        return pitches;
-    }
+    vector<Pitch> getPitches() { return pitches; }
 
     void transformPitch(int delta) {
         for (Pitch &p : pitches) {
