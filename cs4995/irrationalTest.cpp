@@ -20,9 +20,9 @@ int main() {
         { '4', Pitch{"G"} },
         { '5', Pitch{"A"} },
         { '6', Pitch{"B"} },
-        { '7', Pitch{"C6"} },
-        { '8', Pitch{"D6"} },
-        { '9', Pitch{"E6"} },
+        { '7', Pitch{"C^1"} },
+        { '8', Pitch{"D^1"} },
+        { '9', Pitch{"E^1"} },
     };
 
     Track piTrack;

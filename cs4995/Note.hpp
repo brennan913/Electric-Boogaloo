@@ -12,6 +12,7 @@ using std::map;
 using std::string;
 using std::vector;
 
+float WHOLE_NOTE_LENGTH = 4.0; // unit is quarter notes
 int OCTAVE_WIDTH = 12;
 string EXTEND = "-";
 string REST = ".";
@@ -166,27 +167,23 @@ class Chord {
 private:
     vector<Pitch> pitches;
     float length; // quarter note == 1.0
-    bool is_rest;
 
 public:
 
     // constructs a chord out of a collection of pitches
     Chord(vector<Pitch> pitches, float length = 1.0) :
-        pitches(pitches), length(length), is_rest(false) {}
+        pitches(pitches), length(length) {}
 
     // individual notes are not a special case, just chords
     // with only one pitch
-    Chord(Pitch pitch, float length = 1.0) :
-        pitches(), length(length), is_rest(false)
+    Chord(Pitch pitch, float length = 1.0) : pitches(), length(length)
     {
         pitches.push_back(pitch);
     }
 
-    Chord(float length = 1.0) : length(length), is_rest(true) {}
+    Chord(float length = 1.0) : length(length) {}
 
-    vector<Pitch> getPitches() {
-        return pitches;
-    }
+    vector<Pitch> getPitches() { return pitches; }
 
     void transformPitch(int delta) {
         for (Pitch &p : pitches) {
@@ -200,22 +197,22 @@ public:
         }
     }
 
-    float getLength() {
-        return length;
-    }
+    float getLength() { return length; }
 
-    bool isRest() {
-        return is_rest;
-    }
+    void setLength(float l) { length = l; }
 
-    bool isNote() {
-        return pitches.size() == 1;
-    }
+    bool isRest() { return pitches.size() == 0; }
 
-    void incrementLength() {
-        length++;
-    }
+    bool isNote() { return pitches.size() == 1; }
+
+    friend Chord& operator<<(Chord &c, Pitch p);
 };
+
+Chord& operator<<(Chord &c, Pitch p) {
+    c.pitches.push_back(p);
+    return c;
+}
+
 
 } // namespace smf
 

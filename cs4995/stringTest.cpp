@@ -3,7 +3,8 @@
 #include <vector>
 #include "StringProcessing.hpp"
 
-using namespace std;
+using std::vector;
+using namespace smf;
 
 void test(string input, vector<string> expected) {
     vector<string> tokens = tokenize_chordstr(input);

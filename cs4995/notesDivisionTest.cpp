@@ -9,14 +9,16 @@ int main() {
 
     // create tracks
     Track melody;
-    melody << "CEG - B_1/D/G - C/E/A - C/F/A -";
+    melody << "4( C E G F ) 1( E ) 8( E/G/B E/G/B - - E D C C ) 1( . ) 3( A )";
 
     // combine tracks
     MidiOutput out;
     out.addTrack(melody);
 
     // write tracks
-    out.write("chords.mid");
+    out.write("notesDiv.mid");
+
+
 
     return 0;
 }
