@@ -38,7 +38,11 @@ public:
 
     int getVelocity() const { return velocity; }
 
+    void setVelocity(int v) { velocity = v; }
+
     int getOctave() const { return octave; }
+
+    void setOctave(int o) { octave = o; }
 
     void transpose(int delta) {
         for (Chord &c : chords) {

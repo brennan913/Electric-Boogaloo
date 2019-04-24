@@ -30,6 +30,8 @@ int main() {
     MidiOutput thrice;
     Track t1 = melody + melody + 1 * bass;
     Track t2 = bass * 2 + melody + 0 * melody;
+    t1.setVelocity(100);
+    t2.setVelocity(50);
     t1.resize(0.5);
     t2.resize(0.5);
     thrice.addTrack(t1);
