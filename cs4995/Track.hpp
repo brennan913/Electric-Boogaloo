@@ -13,7 +13,6 @@ using std::vector;
 
 int DEFAULT_VELOCITY = 64;
 int DEFAULT_OCTAVE = 5;
-float WHOLE_NOTE_LENGTH = 4.0; // unit is quarter notes
 
 class Track {
 private:
@@ -73,53 +72,13 @@ Track& operator<<(Track &trk, Chord c) {
 
 Track& operator<<(Track &trk, const vector<Chord> &cv) {
     trk.chords.reserve(trk.chords.size() + cv.size());
-    for (Chord c : cv) {
-        trk.chords.push_back(c);
-    }
+    trk.chords.insert(trk.chords.end(), cv.begin(), cv.end());
     return trk;
 }
 
 Track& operator<<(Track &trk, string s) {
-    vector<string> tokens = tokenize(s, ' ');
-    if (tokens.size() == 0) {
-        return trk;
-    }
-
-    // reserve space >= the amount needed
-    trk.chords.reserve(trk.chords.size() + tokens.size());
-
-    float chordLength = 1.0;
-    auto it = tokens.begin();
-    while (it < tokens.end()) {
-        string tok = *it;
-        Chord c{chordLength};
-
-        if (tok[tok.length() - 1] == '(') {
-            // Start specifying note length
-            int subdivision = std::stoi(tok.substr(0, tok.length() - 1));
-            chordLength = WHOLE_NOTE_LENGTH / subdivision;
-            ++it;
-        } else if (tok.compare(")") == 0) {
-            // Stop specifying note length
-            chordLength = 1.0;
-            ++it;
-        } else {
-            if (it->compare(REST) == 0) {
-                // Do nothing; a chord without notes is a rest
-            } else {
-                // Construct chord using vector of pitches
-                vector<string> pitch_tokens = tokenize_chordstr(tok);
-                for (auto& pitch_token: pitch_tokens) {
-                    c << Pitch{pitch_token};
-                }
-            }
-            while(++it < tokens.end() && it->compare(EXTEND) == 0) {
-                c.setLength(c.getLength() + chordLength);
-            }
-            trk << c;
-        }
-    }
-
+    vector<Chord> chords = parseChords(s);
+    trk << chords;
     return trk;
 }
 

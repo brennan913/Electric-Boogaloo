@@ -12,6 +12,7 @@ using std::map;
 using std::string;
 using std::vector;
 
+float WHOLE_NOTE_LENGTH = 4.0; // unit is quarter notes
 int OCTAVE_WIDTH = 12;
 string EXTEND = "-";
 string REST = ".";
