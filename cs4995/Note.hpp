@@ -200,11 +200,11 @@ public:
 
     float getLength() { return length; }
 
+    void setLength(float l) { length = l; }
+
     bool isRest() { return pitches.size() == 0; }
 
     bool isNote() { return pitches.size() == 1; }
-
-    void extend(float delta) { length += delta; }
 
     friend Chord& operator<<(Chord &c, Pitch p);
 };

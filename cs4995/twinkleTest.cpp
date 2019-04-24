@@ -28,8 +28,12 @@ int main() {
     out.write("twinkle_weird.mid");
 
     MidiOutput thrice;
-    thrice.addTrack(melody + melody + 1 * bass);
-    thrice.addTrack(bass * 2 + melody + 0 * melody);
+    Track t1 = melody + melody + 1 * bass;
+    Track t2 = bass * 2 + melody + 0 * melody;
+    t1.resize(0.5);
+    t2.resize(0.5);
+    thrice.addTrack(t1);
+    thrice.addTrack(t2);
     thrice.write("twinkle_thrice.mid");
 
     return 0;

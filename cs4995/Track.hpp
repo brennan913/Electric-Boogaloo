@@ -15,11 +15,6 @@ int DEFAULT_VELOCITY = 64;
 int DEFAULT_OCTAVE = 5;
 float WHOLE_NOTE_LENGTH = 4.0; // unit is quarter notes
 
-/* unimplemented
-void transformLength(
-    vector<Note> &notes, const map<float, float> &transformation);
-    */
-
 class Track {
 private:
     vector<Chord> chords;
@@ -64,6 +59,12 @@ public:
 
     void modulate(const Scale &src, const Scale &dest) {
         transformPitch(src.getDifferences(dest));
+    }
+
+    void resize(float factor) {
+        for (Chord &c : chords) {
+            c.setLength(c.getLength() * factor);
+        }
     }
 
     friend Track& operator<<(Track &trk, Chord c);
@@ -123,7 +124,7 @@ Track& operator<<(Track &trk, string s) {
                 }
             }
             while(++it < tokens.end() && it->compare(EXTEND) == 0) {
-                c.extend(chordLength);
+                c.setLength(c.getLength() + chordLength);
             }
             trk << c;
         }
