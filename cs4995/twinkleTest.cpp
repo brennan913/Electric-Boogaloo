@@ -34,6 +34,7 @@ int main() {
     t2.setVelocity(50);
     t1.resize(0.5);
     t2.resize(0.5);
+    thrice.setTempo(60);
     thrice.addTrack(t1);
     thrice.addTrack(t2);
     thrice.write("twinkle_thrice.mid");
