@@ -11,8 +11,8 @@ namespace smf {
 using std::string;
 using std::vector;
 
-int DEFAULT_VELOCITY = 64;
-int DEFAULT_OCTAVE = 5;
+constexpr int DEFAULT_VELOCITY = 64;
+constexpr int DEFAULT_OCTAVE = 5;
 
 class Track {
 private:
@@ -29,6 +29,12 @@ private:
 public:
     Track(int octave = DEFAULT_OCTAVE, int velocity = DEFAULT_VELOCITY) :
         octave(octave), velocity(velocity) {}
+
+    Track(string str, int octave = DEFAULT_OCTAVE,
+        int velocity = DEFAULT_VELOCITY) : octave(octave), velocity(velocity)
+    {
+        *this << str;
+    }
 
     const vector<Chord>& getChords() { return chords; }
 
@@ -104,8 +110,9 @@ Track& Track::operator*=(int factor) {
     if (factor == 0) {
         chords = vector<Chord>{};
     } else {
+        Track temp = *this;
         for (int i = 0; i < factor - 1; i++) {
-            *this += *this;
+            *this += temp;
         }
     }
     return *this;

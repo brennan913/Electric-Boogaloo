@@ -12,10 +12,10 @@ using std::map;
 using std::string;
 using std::vector;
 
-float WHOLE_NOTE_LENGTH = 4.0; // unit is quarter notes
-int OCTAVE_WIDTH = 12;
-string EXTEND = "-";
-string REST = ".";
+constexpr float WHOLE_NOTE_LENGTH = 4.0; // unit is quarter notes
+constexpr int OCTAVE_WIDTH = 12;
+const string EXTEND = "-";
+const string REST = ".";
 
 enum BasePitch {
     C = 0, D = 2, E = 4, F = 5, G = 7, A = 9, B = 11

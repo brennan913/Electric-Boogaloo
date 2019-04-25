@@ -10,11 +10,11 @@
 
 namespace smf {
 
-uint8_t TICKS_PER_QUARTER = 120;
-uint8_t META_MSG = 0xff;
-uint8_t TEMPO_CHANGE = 0x51;
-uint8_t NOTE_ON = 0x90;
-uint8_t NOTE_OFF = 0x80;
+constexpr uint8_t TICKS_PER_QUARTER = 120;
+constexpr uint8_t META_MSG = 0xff;
+constexpr uint8_t TEMPO_CHANGE = 0x51;
+constexpr uint8_t NOTE_ON = 0x90;
+constexpr uint8_t NOTE_OFF = 0x80;
 
 vector<uchar> getTempoMsg(int tempo) {
     vector<uchar> tempoMsg(6);

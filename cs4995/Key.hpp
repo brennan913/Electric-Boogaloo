@@ -13,10 +13,10 @@ namespace smf {
 using std::string;
 using std::vector;
 
-vector<int> MAJOR = { 0, 2, 4, 5, 7, 9, 11 };
-vector<int> MINOR = { 0, 2, 3, 5, 7, 8, 11 };
-vector<int> HARMONIC_MINOR = MINOR;
-vector<int> NATURAL_MINOR = { 0, 2, 3, 5, 7, 8, 10 };
+const vector<int> MAJOR = { 0, 2, 4, 5, 7, 9, 11 };
+const vector<int> MINOR = { 0, 2, 3, 5, 7, 8, 11 };
+const vector<int> HARMONIC_MINOR = MINOR;
+const vector<int> NATURAL_MINOR = { 0, 2, 3, 5, 7, 8, 10 };
 
 template <typename KeyType, typename ValueType>
 map<KeyType, ValueType> generateMap(
