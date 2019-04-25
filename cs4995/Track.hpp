@@ -22,7 +22,7 @@ private:
 
     void transformPitch(const map<int, int> &deltas) {
         for (Chord &c : chords) {
-            c.transformPitch(deltas);
+            c.transform(deltas);
         }
     }
 
@@ -52,7 +52,7 @@ public:
 
     void transpose(int delta) {
         for (Chord &c : chords) {
-            c.transformPitch(delta);
+            c += delta;
         }
     }
 

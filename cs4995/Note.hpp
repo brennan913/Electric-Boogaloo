@@ -137,25 +137,56 @@ public:
         return base + accidental + OCTAVE_WIDTH * octave;
     }
 
-    void transform(int delta) {
+    Pitch& operator+=(int delta) {
         Pitch result{toInt() + delta};
         base = result.base;
         accidental = result.accidental;
         octave = result.octave;
+        return *this;
+    }
+
+    Pitch& operator-=(int delta) {
+        return *this += -1 * delta;
+    }
+
+    Pitch& operator^=(int delta) {
+        octave += delta;
+        return *this;
     }
 
     void transform(const map<int, int> &deltas) {
         auto val = deltas.find(base + accidental);
         if (val != deltas.end()) {
-            Pitch result{toInt() + val->second};
-            base = result.base;
-            accidental = result.accidental;
-            octave = result.octave;
+            *this += val->second;
         }
     }
 
+    friend Pitch operator+(const Pitch &p, int delta);
+    friend Pitch operator+(int delta, const Pitch &p);
+    friend Pitch operator-(const Pitch &p, int delta);
+    friend Pitch operator^(const Pitch &p, int delta);
     friend std::ostream& operator<<(std::ostream &os, const Pitch &p);
 };
+
+Pitch operator+(const Pitch &p, int delta) {
+    Pitch temp{p};
+    temp += delta;
+    return temp;
+}
+
+Pitch operator+(int delta, const Pitch &p) {
+    return p + delta;
+}
+
+Pitch operator-(const Pitch &p, int delta) {
+    return p + (-1 * delta);
+}
+
+Pitch operator^(const Pitch &p, int delta) {
+    Pitch temp{p};
+    temp ^= delta;
+    return temp;
+}
 
 std::ostream& operator<<(std::ostream &os, const Pitch &p) {
     os << p.base <<
@@ -185,18 +216,6 @@ public:
 
     vector<Pitch> getPitches() { return pitches; }
 
-    void transformPitch(int delta) {
-        for (Pitch &p : pitches) {
-            p.transform(delta);
-        }
-    }
-
-    void transformPitch(const map<int, int> &deltas) {
-        for (Pitch &p : pitches) {
-            p.transform(deltas);
-        }
-    }
-
     float getLength() { return length; }
 
     void setLength(float l) { length = l; }
@@ -205,8 +224,63 @@ public:
 
     bool isNote() { return pitches.size() == 1; }
 
+    const Pitch& operator[](int index) const { return pitches[index]; }
+
+    Pitch& operator[](int index) { return pitches[index]; }
+
+    Chord& operator+=(int delta) {
+        for (Pitch &p : pitches) {
+            p += delta;
+        }
+        return *this;
+    }
+
+    Chord& operator-=(int delta) {
+        for (Pitch &p : pitches) {
+            p -= delta;
+        }
+        return *this;
+    }
+
+    Chord& operator^=(int delta) {
+        for (Pitch &p : pitches) {
+            p ^= delta;
+        }
+        return *this;
+    }
+
+    void transform(const map<int, int> &deltas) {
+        for (Pitch &p : pitches) {
+            p.transform(deltas);
+        }
+    }
+
+    friend Chord operator+(const Chord &c, int delta);
+    friend Chord operator+(int delta, const Chord &p);
+    friend Chord operator-(const Chord &c, int delta);
+    friend Chord operator^(const Chord &c, int delta);
     friend Chord& operator<<(Chord &c, Pitch p);
 };
+
+Chord operator+(const Chord &c, int delta) {
+    Chord temp{c};
+    temp += delta;
+    return temp;
+}
+
+Chord operator+(int delta, const Chord &c) {
+    return c + delta;
+}
+
+Chord operator-(const Chord &c, int delta) {
+    return c + (-1 * delta);
+}
+
+Chord operator^(const Chord &c, int delta) {
+    Chord temp{c};
+    temp ^= delta;
+    return temp;
+}
 
 Chord& operator<<(Chord &c, Pitch p) {
     c.pitches.push_back(p);

@@ -101,6 +101,13 @@ public:
         }
         return generateMap(base_degrees, diffs);
     }
+
+    int size() const { return scale_degrees.size(); };
+
+    const int& operator[](int index) const { return scale_degrees[index]; }
+
+    int& operator[](int index) { return scale_degrees[index]; }
+
 };
 
 } // namespace smf
