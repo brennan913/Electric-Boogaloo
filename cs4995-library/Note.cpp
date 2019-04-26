@@ -7,7 +7,7 @@ namespace smf {
 using std::map;
 using std::vector;
 
-Chord::Chord(vector<Pitch> pitches, float length) :
+Chord::Chord(const vector<Pitch> &pitches, float length) :
     pitches(pitches), length(length) {}
 
 Chord::Chord(Pitch pitch, float length) : pitches(), length(length)
@@ -19,13 +19,13 @@ Chord::Chord(float length) : length(length) {}
 
 vector<Pitch> Chord::getPitches() { return pitches; }
 
-float Chord::getLength() { return length; }
+float Chord::getLength() const { return length; }
 
 void Chord::setLength(float l) { length = l; }
 
-bool Chord::isRest() { return pitches.size() == 0; }
+bool Chord::isRest() const { return pitches.size() == 0; }
 
-bool Chord::isNote() { return pitches.size() == 1; }
+bool Chord::isNote() const { return pitches.size() == 1; }
 
 const Pitch& Chord::operator[](int index) const { return pitches[index]; }
 

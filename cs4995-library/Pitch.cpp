@@ -95,11 +95,11 @@ Pitch::Pitch(int p) {
     }
 }
 
-BasePitch Pitch::getBasePitch() {
+BasePitch Pitch::getBasePitch() const {
     return base;
 }
 
-int Pitch::toInt() {
+int Pitch::toInt() const {
     return base + accidental + OCTAVE_WIDTH * octave;
 }
 

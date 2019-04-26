@@ -39,7 +39,7 @@ public:
     Pitch getPitch(int degree) const;
 
     // Constructs a chord from the specified degrees in a scale.
-    Chord getChord(vector<int> degrees, float length = 1.0) const;
+    Chord getChord(vector<int> degrees, float length = QUARTER_NOTE) const;
 };
 
 } // namespace smf

@@ -7,30 +7,33 @@
 
 namespace smf {
 
+constexpr float QUARTER_NOTE = 1.0; // unit is quarter notes
+constexpr float WHOLE_NOTE = 4.0; // unit is quarter notes
+
 using std::map;
 using std::vector;
 
 class Chord {
 private:
     vector<Pitch> pitches;
-    float length; // quarter note == 1.0
+    float length;
 
 public:
 
     // Constructs a chord out of a collection of Pitches.
-    Chord(vector<Pitch> pitches, float length = 1.0);
+    Chord(const vector<Pitch> &pitches, float length = QUARTER_NOTE);
 
     // Construct a single note.
-    Chord(Pitch pitch, float length = 1.0);
+    Chord(Pitch pitch, float length = QUARTER_NOTE);
 
     // Construct an empty note, i.e. a rest.
-    Chord(float length = 1.0);
+    Chord(float length = QUARTER_NOTE);
 
     vector<Pitch> getPitches();
-    float getLength();
+    float getLength() const;
     void setLength(float l);
-    bool isRest();
-    bool isNote();
+    bool isRest() const;
+    bool isNote() const;
     const Pitch& operator[](int index) const;
     Pitch& operator[](int index);
     Chord& operator+=(int delta);

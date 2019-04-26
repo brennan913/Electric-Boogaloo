@@ -169,10 +169,12 @@ makedirs:
 #   end                                                                   #
 #                                                                         #
 
+Key.o: Key.cpp Key.hpp Note.hpp Pitch.hpp StringProcessing.hpp
+
 MidiOutput.o: MidiOutput.cpp MidiOutput.hpp Key.hpp MidiFile.h Note.hpp \
   Pitch.hpp Track.hpp
 
-Note.o: Note.cpp Note.hpp Pitch.hpp Key.hpp StringProcessing.hpp
+Note.o: Note.cpp Note.hpp Pitch.hpp StringProcessing.hpp
 
 Pitch.o: Pitch.cpp Pitch.hpp
 

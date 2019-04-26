@@ -59,7 +59,7 @@ vector<Chord> parseChords(string s) {
     // reserve space >= the amount needed
     result.reserve(tokens.size());
 
-    float chordLength = 1.0;
+    float chordLength = QUARTER_NOTE;
     auto it = tokens.begin();
     while (it < tokens.end()) {
         string tok = *it;
@@ -68,11 +68,11 @@ vector<Chord> parseChords(string s) {
         if (tok[tok.length() - 1] == '(') {
             // Start specifying note length
             int subdivision = std::stoi(tok.substr(0, tok.length() - 1));
-            chordLength = WHOLE_NOTE_LENGTH / subdivision;
+            chordLength = WHOLE_NOTE / subdivision;
             ++it;
         } else if (tok.compare(")") == 0) {
             // Stop specifying note length
-            chordLength = 1.0;
+            chordLength = QUARTER_NOTE;
             ++it;
         } else {
             if (it->compare(REST) == 0) {

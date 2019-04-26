@@ -9,6 +9,9 @@
 using std::vector;
 using std::string;
 
+const string EXTEND = "-";
+const string REST = ".";
+
 namespace smf {
 
 vector<string> tokenize(string str, char delimiter);

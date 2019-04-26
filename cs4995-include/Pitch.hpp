@@ -11,10 +11,7 @@ using std::map;
 using std::string;
 using std::vector;
 
-constexpr float WHOLE_NOTE_LENGTH = 4.0; // unit is quarter notes
 constexpr int OCTAVE_WIDTH = 12;
-const string EXTEND = "-";
-const string REST = ".";
 
 enum BasePitch {
     C = 0, D = 2, E = 4, F = 5, G = 7, A = 9, B = 11
@@ -63,8 +60,8 @@ public:
     // MIDI pitch representation to Pitch object
     Pitch(int p);
 
-    BasePitch getBasePitch();
-    int toInt();
+    BasePitch getBasePitch() const;
+    int toInt() const;
 
     // If the Pitch is represented by a key in the delta map, apply the
     // corresponding delta.
