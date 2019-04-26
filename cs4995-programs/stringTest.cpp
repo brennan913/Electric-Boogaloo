@@ -1,13 +1,13 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "StringProcessing.hpp"
+#include "MidiOutput.hpp"
 
 using std::vector;
 using namespace smf;
 
 void test(string input, vector<string> expected) {
-    vector<string> tokens = tokenize_chordstr(input);
+    vector<string> tokens = tokenizeChordstr(input);
     for (int i = 0; i < tokens.size(); i++) {
         assert(tokens[i].compare(expected[i]) == 0);
     }

@@ -44,8 +44,9 @@ EXTEN     =
 # User-modifiable configuration variables:
 #
 
-SRCDIR    = cs4995
+SRCDIR    = cs4995-programs
 INCDIR    = include
+INC4995   = cs4995-include
 OBJDIR    = obj
 LIBDIR    = lib
 LIBFILE   = midifile
@@ -53,7 +54,7 @@ LIBPATH   = $(LIBDIR)/lib$(LIBFILE).a
 TARGDIR   = cs4995-bin
 COMPILER  = LANG=C $(ENV) g++ $(ARCH)
 DEFINES   = 
-PREFLAGS  = -O3 -Wall -I$(INCDIR) $(DEFINES)
+PREFLAGS  = -O3 -Wall -I$(INCDIR) -I$(INC4995) $(DEFINES)
 # Add -static flag to compile without dynamics libraries for better portability:
 #PREFLAGS += -static
 
