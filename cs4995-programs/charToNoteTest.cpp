@@ -42,14 +42,43 @@ Chord charToNote(char c, float length) {
     return Chord{charToPitch(c), length};
 }
 
+Chord charToChord(char c, vector<int> degrees, float length) {
+    if (c == ' ' || c == ',' || c == '.') {
+        return Chord{length};
+    }
+    int delta;
+    if (c >= 'a' && c <= 'z') {
+        delta = c - 'a';
+    } else if (c >= 'A' && c <= 'Z') {
+        delta = c - 'A';
+    } else if (c >= '0' && c <= '9') {
+        delta = c - '0';
+    } else {
+        delta = c;
+    }
+    delta %= scale.size();
+    for (int &x : degrees) {
+        x += delta;
+    }
+    return scale.getChord(degrees, length);
+}
+
 int main() {
+    string speaker = "Aaron Copland";
+    Track speakerTrack(3);
+    for (int i = 0; i < speaker.length(); i++) {
+        speakerTrack << charToChord(speaker[i], { 0, 4, 9 }, 4);
+    }
+
     string quote =
         "So long as the human spirit thrives on this planet, music in some living form will accompany and sustain it";
     Track quoteTrack;
     for (int i = 0; i < quote.length(); i++) {
-        quoteTrack << charToNote(quote[i], 0.5);
+        quoteTrack << charToNote(quote[i], 0.25);
     }
+
     MidiOutput out;
+    out.addTrack(speakerTrack);
     out.addTrack(quoteTrack);
     out.modulate({A, MAJOR}, {C, MINOR});
     out.write("quote.mid");

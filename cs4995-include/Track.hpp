@@ -24,29 +24,21 @@ private:
 
 public:
     Track(int octave = DEFAULT_OCTAVE, int velocity = DEFAULT_VELOCITY);
-
-    Track(string str, int octave = DEFAULT_OCTAVE, int velocity = DEFAULT_VELOCITY);
+    Track(string str, int octave = DEFAULT_OCTAVE,
+        int velocity = DEFAULT_VELOCITY);
 
     const vector<Chord>& getChords() const;
-
-    const Chord& operator[](int index) const;
-
-    Chord& operator[](int index);
-
     int getVelocity() const;
-
     void setVelocity(int v);
-
     int getOctave() const;
-
     void setOctave(int o);
 
     void transpose(int delta);
-
     void modulate(const Scale &src, const Scale &dest);
-
     void resize(float factor);
 
+    const Chord& operator[](int index) const;
+    Chord& operator[](int index);
     friend Track& operator<<(Track &trk, Chord c);
     friend Track& operator<<(Track &trk, const vector<Chord> &c);
     friend Track& operator<<(Track &trk, string s);

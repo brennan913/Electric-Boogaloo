@@ -26,7 +26,7 @@ map<KeyType, ValueType> generateMap(
     return m;
 }
 
-// each scale degree should be higher than the next.
+// Each scale degree should be higher than the next.
 void Scale::makeAscending() {
     auto prev = scaleDegrees.begin();
     if (prev == scaleDegrees.end()) {
@@ -46,7 +46,7 @@ Scale::Scale(const vector<Pitch> &pitches) {
     for (Pitch p : pitches) {
         scaleDegrees.push_back(p.toInt() % OCTAVE_WIDTH);
     }
-    this->makeAscending();
+    makeAscending();
 }
 
 Scale::Scale(const string &input) {
@@ -55,14 +55,14 @@ Scale::Scale(const string &input) {
         Pitch p{tok};
         scaleDegrees.push_back(p.toInt());
     }
-    this->makeAscending();
+    makeAscending();
 }
 
 Scale::Scale(int key, const vector<int> &intervals) {
     for (int i : intervals) {
         scaleDegrees.push_back(key + i);
     }
-    this->makeAscending();
+    makeAscending();
 }
 
 map<int, int> Scale::getDifferences(const Scale &s) const {
@@ -89,5 +89,19 @@ int Scale::size() const { return scaleDegrees.size(); };
 const int& Scale::operator[](int index) const { return scaleDegrees[index]; }
 
 int& Scale::operator[](int index) { return scaleDegrees[index]; }
+
+Pitch Scale::getPitch(int deg) const {
+    Pitch p{scaleDegrees[deg % scaleDegrees.size()]};
+    p ^= deg / scaleDegrees.size();
+    return p;
+}
+
+Chord Scale::getChord(vector<int> degrees, float length) const {
+    Chord c{length};
+    for (int deg : degrees) {
+        c << getPitch(deg);
+    }
+    return c;
+}
 
 } // namespace smf

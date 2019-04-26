@@ -4,7 +4,6 @@
 #include <iostream>
 #include <sstream>
 #include "Pitch.hpp"
-#include "Key.hpp"
 
 namespace smf {
 
@@ -18,16 +17,13 @@ private:
 
 public:
 
-    // constructs a chord out of a collection of pitches
+    // Constructs a chord out of a collection of Pitches.
     Chord(vector<Pitch> pitches, float length = 1.0);
 
-    // individual notes are not a special case, just chords
-    // with only one pitch
+    // Construct a single note.
     Chord(Pitch pitch, float length = 1.0);
 
-    // constructs a chord from the specified notes in a scale
-    Chord(Scale s, vector<int> degrees, float length = 1.0);
-
+    // Construct an empty note, i.e. a rest.
     Chord(float length = 1.0);
 
     vector<Pitch> getPitches();
@@ -35,24 +31,21 @@ public:
     void setLength(float l);
     bool isRest();
     bool isNote();
-
     const Pitch& operator[](int index) const;
     Pitch& operator[](int index);
     Chord& operator+=(int delta);
     Chord& operator-=(int delta);
     Chord& operator^=(int delta);
-
-    void transform(const map<int, int> &deltas);
-
     friend Chord operator+(const Chord &c, int delta);
     friend Chord operator+(int delta, const Chord &p);
     friend Chord operator-(const Chord &c, int delta);
     friend Chord operator^(const Chord &c, int delta);
     friend Chord& operator<<(Chord &c, Pitch p);
+
+    // Modify each Pitch corresponding to a key in the map. The values
+    // represent the delta to change the Pitch.
+    void transform(const map<int, int> &deltas);
+
 };
-
-vector<string> tokenizeChordstr(string str);
-
-vector<Chord> parseChords(string s);
 
 } // namespace smf

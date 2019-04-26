@@ -22,10 +22,6 @@ Track::Track(string str, int octave, int velocity) :
 
 const vector<Chord>& Track::getChords() const { return chords; }
 
-const Chord& Track::operator[](int index) const { return chords[index]; }
-
-Chord& Track::operator[](int index) { return chords[index]; }
-
 int Track::getVelocity() const { return velocity; }
 
 void Track::setVelocity(int v) { velocity = v; }
@@ -49,6 +45,10 @@ void Track::resize(float factor) {
         c.setLength(c.getLength() * factor);
     }
 }
+
+const Chord& Track::operator[](int index) const { return chords[index]; }
+
+Chord& Track::operator[](int index) { return chords[index]; }
 
 Track& operator<<(Track &trk, Chord c) {
     trk.chords.push_back(c);

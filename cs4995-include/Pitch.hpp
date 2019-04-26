@@ -29,20 +29,20 @@ const map<char, int> charAccidentalMap {
 };
 
 
+/*
+ * Helper functions for processing character and string representations for
+ * Pitch-related concepts.
+ */
+
 bool isBasePitch(char c);
-
-BasePitch toBasePitch(char c);
-
 bool isAccidental(char c);
 
+BasePitch toBasePitch(char c);
 int toAccidental(char c);
-
 int toOctave(char c);
 
 BasePitch baseFromString(string token);
-
 int accidentalFromString(string token);
-
 int octaveFromString(string token);
 
 /*
@@ -64,17 +64,15 @@ public:
     Pitch(int p);
 
     BasePitch getBasePitch();
-
     int toInt();
 
-    Pitch& operator+=(int delta);
-
-    Pitch& operator-=(int delta);
-
-    Pitch& operator^=(int delta);
-
+    // If the Pitch is represented by a key in the delta map, apply the
+    // corresponding delta.
     void transform(const map<int, int> &deltas);
 
+    Pitch& operator+=(int delta);
+    Pitch& operator-=(int delta);
+    Pitch& operator^=(int delta);
     friend Pitch operator+(const Pitch &p, int delta);
     friend Pitch operator+(int delta, const Pitch &p);
     friend Pitch operator-(const Pitch &p, int delta);

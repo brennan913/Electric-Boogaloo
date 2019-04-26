@@ -71,7 +71,6 @@ Pitch::Pitch(string s) {
     octave = octaveFromString(s);
 }
 
-// MIDI pitch representation to Pitch object
 Pitch::Pitch(int p) {
     int remainder = p % OCTAVE_WIDTH;
     octave = p / OCTAVE_WIDTH;

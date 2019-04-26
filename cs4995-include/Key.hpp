@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include "Pitch.hpp"
+#include "Note.hpp"
 #include "StringProcessing.hpp"
 
 namespace smf {
@@ -27,11 +28,18 @@ public:
     Scale(const string &input);
     Scale(int key, const vector<int> &intervals);
 
-    map<int, int> getDifferences(const Scale &s) const;
     int size() const;
     const int& operator[](int index) const;
     int& operator[](int index);
 
+    // Get the distance between each pair of notes in the two scales.
+    map<int, int> getDifferences(const Scale &s) const;
+
+    // Constructs a chord from the specified scale degree.
+    Pitch getPitch(int degree) const;
+
+    // Constructs a chord from the specified degrees in a scale.
+    Chord getChord(vector<int> degrees, float length = 1.0) const;
 };
 
 } // namespace smf
