@@ -67,14 +67,15 @@ int main() {
     string speaker = "Aaron Copland";
     Track speakerTrack(3);
     for (int i = 0; i < speaker.length(); i++) {
-        speakerTrack << charToChord(speaker[i], { 0, 4, 9 }, 4);
+        speakerTrack << charToChord(speaker[i], { 0, 4, 9 }, WHOLE_NOTE);
     }
 
     string quote =
-        "So long as the human spirit thrives on this planet, music in some living form will accompany and sustain it";
+        "So long as the human spirit thrives on this planet, "
+        "music in some living form will accompany and sustain it";
     Track quoteTrack;
     for (int i = 0; i < quote.length(); i++) {
-        quoteTrack << charToNote(quote[i], 0.25);
+        quoteTrack << charToNote(quote[i], EIGHTH_NOTE);
     }
 
     MidiOutput out;

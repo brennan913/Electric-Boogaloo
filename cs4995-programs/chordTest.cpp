@@ -10,7 +10,7 @@ int main() {
     // create tracks
     Track melody;
     melody << "CEG - B_1/D/G - C/E/A - C/F/A -";
-    melody << Scale{C, MAJOR}.getChord({ 0, 2, 4, 7, 9 }, 4);
+    melody << Scale{C, MAJOR}.getChord({ 0, 2, 4, 7, 9 }, WHOLE_NOTE);
 
     // combine tracks
     MidiOutput out;

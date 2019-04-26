@@ -8,7 +8,10 @@
 namespace smf {
 
 constexpr float QUARTER_NOTE = 1.0; // unit is quarter notes
-constexpr float WHOLE_NOTE = 4.0; // unit is quarter notes
+constexpr float HALF_NOTE = 2.0;
+constexpr float WHOLE_NOTE = 4.0;
+constexpr float EIGHTH_NOTE = 0.5;
+constexpr float SIXTEENTH_NOTE = 0.25;
 
 using std::map;
 using std::vector;

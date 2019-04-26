@@ -27,7 +27,7 @@ int main() {
 
     Track piTrack;
     for (int i = 0; i < pi.length(); i++) {
-        piTrack << Chord{digitToPitch[pi[i]], 0.25};
+        piTrack << Chord{digitToPitch[pi[i]], SIXTEENTH_NOTE};
     }
     Track eTrack(3);
     for (int i = 0; i < e.length(); i++) {
