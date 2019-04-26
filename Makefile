@@ -59,6 +59,7 @@ cs4995:
 
 clean:
 	$(MAKE) -f Makefile.library clean
+	-rm -rf cs4995-bin
 	-rm -rf bin
 	-rm -rf lib
 
