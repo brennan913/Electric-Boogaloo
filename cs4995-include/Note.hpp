@@ -50,11 +50,12 @@ public:
     Note& operator+=(int delta);
     Note& operator-=(int delta);
     Note& operator^=(int delta);
-    friend Note operator+(const Note &c, int delta);
-    friend Note operator+(int delta, const Note &p);
-    friend Note operator-(const Note &c, int delta);
-    friend Note operator^(const Note &c, int delta);
-    friend Note& operator<<(Note &c, Pitch p);
+    friend Note operator+(const Note &note, int delta);
+    friend Note operator+(int delta, const Note &note);
+    friend Note operator-(const Note &note, int delta);
+    friend Note operator^(const Note &note, int delta);
+    friend Note& operator<<(Note &note, Pitch p);
+    friend Note& operator<<(Note &note, vector<Pitch> pitches);
 
     // Modify each Pitch represented by a key in the map. Each value
     // represents the delta for changing the corresponding Pitch.

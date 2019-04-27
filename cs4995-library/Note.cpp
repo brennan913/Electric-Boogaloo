@@ -77,6 +77,14 @@ Note& operator<<(Note &note, Pitch p) {
     return note;
 }
 
+Note& operator<<(Note &note, vector<Pitch> v) {
+    note.pitches.reserve(note.pitches.size() + v.size());
+    for (Pitch p : v) {
+        note << p;
+    }
+    return note;
+}
+
 void Note::transform(const map<int, int> &deltas) {
     for (Pitch &p : pitches) {
         p.transform(deltas);

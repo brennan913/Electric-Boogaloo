@@ -55,9 +55,9 @@ Track& operator<<(Track &trk, Note c) {
     return trk;
 }
 
-Track& operator<<(Track &trk, const vector<Note> &cv) {
-    trk.notes.reserve(trk.notes.size() + cv.size());
-    trk.notes.insert(trk.notes.end(), cv.begin(), cv.end());
+Track& operator<<(Track &trk, const vector<Note> &v) {
+    trk.notes.reserve(trk.notes.size() + v.size());
+    trk.notes.insert(trk.notes.end(), v.begin(), v.end());
     return trk;
 }
 

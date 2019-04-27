@@ -22,7 +22,9 @@ vector<string> tokenize(string str, char delimiter) {
 }
 
 // assumes valid input
-vector<string> tokenizeChordstr(string str) {
+// parse a string representing a Note (e.g. "CEG", "C/E/G") into tokens
+// representing Pitches.
+vector<string> tokenizeNotestr(string str) {
     // Token containing '/' means we're dealing with a chord
     // split using / as a delimiter
     if (str.find('/') != string::npos) {
@@ -46,10 +48,20 @@ vector<string> tokenizeChordstr(string str) {
     return tokens;
 }
 
-vector<Note> parseNotes(string s) {
+vector<Pitch> parsePitches(string str) {
+    vector<string> tokens = tokenizeNotestr(str);
+    vector<Pitch> pitches(tokens.size());
+
+    for (string tok : tokens) {
+        pitches.push_back(Pitch{tok});
+    }
+    return pitches;
+}
+
+vector<Note> parseNotes(string str) {
     vector<Note> result;
 
-    vector<string> tokens = tokenize(s, ' ');
+    vector<string> tokens = tokenize(str, ' ');
     if (tokens.size() == 0) {
         return result;
     }
@@ -74,11 +86,7 @@ vector<Note> parseNotes(string s) {
             ++it;
         } else {
             if (it->compare(REST) != 0) {
-                // Construct a Note using vector of pitches
-                vector<string> pitchTokens = tokenizeChordstr(tok);
-                for (auto& pitchToken: pitchTokens) {
-                    note << Pitch{pitchToken};
-                }
+                note << parsePitches(tok);
             }
             while(++it < tokens.end() && it->compare(EXTEND) == 0) {
                 note.setLength(note.getLength() + noteLength);
