@@ -31,8 +31,7 @@ vector<string> tokenizeChordstr(string str) {
 
     vector<string> tokens;
     unsigned int start = 0, end = 1;
-    // Create new token every time it encounters one of
-    // {'A','B','C','D','E','F','G'}
+    // Create new token for every BasePitch ('A' - 'G').
     while (end < str.size()){
         while (!(isBasePitch(str[end])) && end < str.size() ) {
             end++;
@@ -47,7 +46,6 @@ vector<string> tokenizeChordstr(string str) {
     return tokens;
 }
 
-// Parse an input string and convert to the corresponding chords
 vector<Chord> parseChords(string s) {
     vector<Chord> result;
 
@@ -59,7 +57,7 @@ vector<Chord> parseChords(string s) {
     // reserve space >= the amount needed
     result.reserve(tokens.size());
 
-    float chordLength = QUARTER_NOTE;
+    float chordLength = DEFAULT_LENGTH;
     auto it = tokens.begin();
     while (it < tokens.end()) {
         string tok = *it;
@@ -68,11 +66,11 @@ vector<Chord> parseChords(string s) {
         if (tok[tok.length() - 1] == '(') {
             // Start specifying note length
             int subdivision = std::stoi(tok.substr(0, tok.length() - 1));
-            chordLength = WHOLE_NOTE / subdivision;
+            chordLength = WHOLE_LENGTH / subdivision;
             ++it;
         } else if (tok.compare(")") == 0) {
             // Stop specifying note length
-            chordLength = QUARTER_NOTE;
+            chordLength = DEFAULT_LENGTH;
             ++it;
         } else {
             if (it->compare(REST) == 0) {

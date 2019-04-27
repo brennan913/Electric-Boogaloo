@@ -67,7 +67,7 @@ int main() {
     string speaker = "Aaron Copland";
     Track speakerTrack(3);
     for (int i = 0; i < speaker.length(); i++) {
-        speakerTrack << charToChord(speaker[i], { 0, 4, 9 }, WHOLE_NOTE);
+        speakerTrack << charToChord(speaker[i], { 0, 4, 9 }, WHOLE_LENGTH);
     }
 
     string quote =
@@ -75,7 +75,7 @@ int main() {
         "music in some living form will accompany and sustain it";
     Track quoteTrack;
     for (int i = 0; i < quote.length(); i++) {
-        quoteTrack << charToNote(quote[i], EIGHTH_NOTE);
+        quoteTrack << charToNote(quote[i], EIGHTH_LENGTH);
     }
 
     MidiOutput out;

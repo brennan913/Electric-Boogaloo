@@ -71,9 +71,9 @@ Pitch::Pitch(string s) {
     octave = octaveFromString(s);
 }
 
-Pitch::Pitch(int p) {
-    int remainder = p % OCTAVE_WIDTH;
-    octave = p / OCTAVE_WIDTH;
+Pitch::Pitch(int midiValue) {
+    int remainder = midiValue % OCTAVE_WIDTH;
+    octave = midiValue / OCTAVE_WIDTH;
     if(remainder < 0) {
         remainder += OCTAVE_WIDTH;
         octave--;

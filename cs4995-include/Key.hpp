@@ -21,6 +21,7 @@ class Scale {
 private:
     vector<int> scaleDegrees;
 
+    // Make each scale degree higher than the next.
     void makeAscending();
 
 public:
@@ -32,14 +33,16 @@ public:
     const int& operator[](int index) const;
     int& operator[](int index);
 
-    // Get the distance between each pair of notes in the two scales.
-    map<int, int> getDifferences(const Scale &s) const;
+    // Get a mapping to another scale. The keys are the pitches of the current
+    // scale and the values are the deltas to the corresponding pitches in the
+    // new scale.
+    map<int, int> createMappingTo(const Scale &s) const;
 
     // Constructs a chord from the specified scale degree.
     Pitch getPitch(int degree) const;
 
     // Constructs a chord from the specified degrees in a scale.
-    Chord getChord(vector<int> degrees, float length = QUARTER_NOTE) const;
+    Chord getChord(vector<int> degrees, float length = DEFAULT_LENGTH) const;
 };
 
 } // namespace smf

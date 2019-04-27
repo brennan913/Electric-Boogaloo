@@ -37,7 +37,7 @@ void Track::transpose(int delta) {
 }
 
 void Track::modulate(const Scale &src, const Scale &dest) {
-    transformPitch(src.getDifferences(dest));
+    transformPitch(src.createMappingTo(dest));
 }
 
 void Track::resize(float factor) {

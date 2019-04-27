@@ -55,10 +55,12 @@ private:
 public:
     Pitch(BasePitch base = C, int accidental = 0, int octave = 0);
 
+    // Construct a Pitch from a string representation, e.g. "C#5".
     Pitch(string s);
 
-    // MIDI pitch representation to Pitch object
-    Pitch(int p);
+    // Construct a Pitch from an integer representation corresponding to the
+    // MIDI pitch format.
+    Pitch(int midiValue);
 
     BasePitch getBasePitch() const;
     int toInt() const;
@@ -68,12 +70,15 @@ public:
     void transform(const map<int, int> &deltas);
 
     Pitch& operator+=(int delta);
-    Pitch& operator-=(int delta);
-    Pitch& operator^=(int delta);
     friend Pitch operator+(const Pitch &p, int delta);
     friend Pitch operator+(int delta, const Pitch &p);
+    Pitch& operator-=(int delta);
     friend Pitch operator-(const Pitch &p, int delta);
+
+    // Raise or lower the octave of the Pitch.
+    Pitch& operator^=(int delta);
     friend Pitch operator^(const Pitch &p, int delta);
+
     friend std::ostream& operator<<(std::ostream &os, const Pitch &p);
 };
 

@@ -7,11 +7,13 @@
 
 namespace smf {
 
-constexpr float QUARTER_NOTE = 1.0; // unit is quarter notes
-constexpr float HALF_NOTE = 2.0;
-constexpr float WHOLE_NOTE = 4.0;
-constexpr float EIGHTH_NOTE = 0.5;
-constexpr float SIXTEENTH_NOTE = 0.25;
+// In MIDI format, the unit of length is a quarter note.
+constexpr float QUARTER_LENGTH = 1.0;
+constexpr float HALF_LENGTH = 2.0;
+constexpr float WHOLE_LENGTH = 4.0;
+constexpr float EIGHTH_LENGTH = 0.5;
+constexpr float SIXTEENTH_LENGTH = 0.25;
+constexpr float DEFAULT_LENGTH = QUARTER_LENGTH;
 
 using std::map;
 using std::vector;
@@ -24,13 +26,13 @@ private:
 public:
 
     // Constructs a chord out of a collection of Pitches.
-    Chord(const vector<Pitch> &pitches, float length = QUARTER_NOTE);
+    Chord(const vector<Pitch> &pitches, float length = DEFAULT_LENGTH);
 
     // Construct a single note.
-    Chord(Pitch pitch, float length = QUARTER_NOTE);
+    Chord(Pitch pitch, float length = DEFAULT_LENGTH);
 
     // Construct an empty note, i.e. a rest.
-    Chord(float length = QUARTER_NOTE);
+    Chord(float length = DEFAULT_LENGTH);
 
     vector<Pitch> getPitches();
     float getLength() const;
@@ -48,8 +50,8 @@ public:
     friend Chord operator^(const Chord &c, int delta);
     friend Chord& operator<<(Chord &c, Pitch p);
 
-    // Modify each Pitch corresponding to a key in the map. The values
-    // represent the delta to change the Pitch.
+    // Modify each Pitch represented by a key in the map. Each value
+    // represents the delta for changing the corresponding Pitch.
     void transform(const map<int, int> &deltas);
 
 };

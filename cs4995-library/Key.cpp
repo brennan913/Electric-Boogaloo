@@ -26,7 +26,6 @@ map<KeyType, ValueType> generateMap(
     return m;
 }
 
-// Each scale degree should be higher than the next.
 void Scale::makeAscending() {
     auto prev = scaleDegrees.begin();
     if (prev == scaleDegrees.end()) {
@@ -65,18 +64,18 @@ Scale::Scale(int key, const vector<int> &intervals) {
     makeAscending();
 }
 
-map<int, int> Scale::getDifferences(const Scale &s) const {
+map<int, int> Scale::createMappingTo(const Scale &s) const {
     if (scaleDegrees.size() != s.scaleDegrees.size()) {
         std::cerr <<
-            "Different number of notes in scales in getDifference.\n";
+            "Different number of notes in scales in createMappingTo.\n";
         exit(1);
     }
     vector<int> diffs;
     for (int i = 0; i < scaleDegrees.size(); i++) {
         diffs.push_back((int) s.scaleDegrees[i] - (int) scaleDegrees[i]);
     }
-    // need to round down scale degrees to their common denomicator to be
-    // used for transformations
+    // Need to round down scale degrees to their common denominator to be
+    // used for transformations.
     vector<int> baseDegrees;
     for (int deg : scaleDegrees) {
         baseDegrees.push_back(deg % OCTAVE_WIDTH);

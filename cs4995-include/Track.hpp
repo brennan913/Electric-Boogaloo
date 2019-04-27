@@ -20,6 +20,7 @@ private:
     int octave;
     int velocity;
 
+    // Apply the given mapping to each pitch in the Track.
     void transformPitch(const map<int, int> &deltas);
 
 public:
@@ -33,18 +34,29 @@ public:
     int getOctave() const;
     void setOctave(int o);
 
+    // Apply the given delta to each pitch in the Track.
     void transpose(int delta);
+
+    // Change the key of the Track from one Scale to another.
     void modulate(const Scale &src, const Scale &dest);
+
+    // Stretch or compress the note lengths of the Track by the given factor.
     void resize(float factor);
 
     const Chord& operator[](int index) const;
     Chord& operator[](int index);
+
+    // Operations for appending.
     friend Track& operator<<(Track &trk, Chord c);
     friend Track& operator<<(Track &trk, const vector<Chord> &c);
     friend Track& operator<<(Track &trk, string s);
+
+    // Adding Tracks appends them to each other.
     Track &operator+=(const Track &t2);
-    Track &operator*=(int factor);
     friend Track operator+(const Track &t1, const Track &t2);
+
+    // Multiplying Tracks creates a loop.
+    Track &operator*=(int factor);
     friend Track operator*(const Track &t, int factor);
     friend Track operator*(int factor, const Track &t);
 };
