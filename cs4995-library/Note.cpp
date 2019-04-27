@@ -7,77 +7,77 @@ namespace smf {
 using std::map;
 using std::vector;
 
-Chord::Chord(const vector<Pitch> &pitches, float length) :
+Note::Note(const vector<Pitch> &pitches, float length) :
     pitches(pitches), length(length) {}
 
-Chord::Chord(Pitch pitch, float length) : pitches(), length(length)
+Note::Note(Pitch pitch, float length) : pitches(), length(length)
 {
     pitches.push_back(pitch);
 }
 
-Chord::Chord(float length) : length(length) {}
+Note::Note(float length) : length(length) {}
 
-vector<Pitch> Chord::getPitches() { return pitches; }
+vector<Pitch> Note::getPitches() { return pitches; }
 
-float Chord::getLength() const { return length; }
+float Note::getLength() const { return length; }
 
-void Chord::setLength(float l) { length = l; }
+void Note::setLength(float l) { length = l; }
 
-bool Chord::isRest() const { return pitches.size() == 0; }
+bool Note::isRest() const { return pitches.size() == 0; }
 
-bool Chord::isNote() const { return pitches.size() == 1; }
+bool Note::isSingleNote() const { return pitches.size() == 1; }
 
-const Pitch& Chord::operator[](int index) const { return pitches[index]; }
+const Pitch& Note::operator[](int index) const { return pitches[index]; }
 
-Pitch& Chord::operator[](int index) { return pitches[index]; }
+Pitch& Note::operator[](int index) { return pitches[index]; }
 
-Chord& Chord::operator+=(int delta) {
+Note& Note::operator+=(int delta) {
     for (Pitch &p : pitches) {
         p += delta;
     }
     return *this;
 }
 
-Chord& Chord::operator-=(int delta) {
+Note& Note::operator-=(int delta) {
     for (Pitch &p : pitches) {
         p -= delta;
     }
     return *this;
 }
 
-Chord& Chord::operator^=(int delta) {
+Note& Note::operator^=(int delta) {
     for (Pitch &p : pitches) {
         p ^= delta;
     }
     return *this;
 }
 
-Chord operator+(const Chord &c, int delta) {
-    Chord temp{c};
+Note operator+(const Note &note, int delta) {
+    Note temp{note};
     temp += delta;
     return temp;
 }
 
-Chord operator+(int delta, const Chord &c) {
-    return c + delta;
+Note operator+(int delta, const Note &note) {
+    return note + delta;
 }
 
-Chord operator-(const Chord &c, int delta) {
-    return c + (-1 * delta);
+Note operator-(const Note &note, int delta) {
+    return note + (-1 * delta);
 }
 
-Chord operator^(const Chord &c, int delta) {
-    Chord temp{c};
+Note operator^(const Note &note, int delta) {
+    Note temp{note};
     temp ^= delta;
     return temp;
 }
 
-Chord& operator<<(Chord &c, Pitch p) {
-    c.pitches.push_back(p);
-    return c;
+Note& operator<<(Note &note, Pitch p) {
+    note.pitches.push_back(p);
+    return note;
 }
 
-void Chord::transform(const map<int, int> &deltas) {
+void Note::transform(const map<int, int> &deltas) {
     for (Pitch &p : pitches) {
         p.transform(deltas);
     }

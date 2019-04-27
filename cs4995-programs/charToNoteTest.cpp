@@ -35,16 +35,16 @@ Pitch charToPitch(char c) {
     return p;
 }
 
-Chord charToNote(char c, float length) {
+Note charToNote(char c, float length) {
     if (c == ' ' || c == ',' || c == '.') {
-        return Chord{length};
+        return Note{length};
     }
-    return Chord{charToPitch(c), length};
+    return Note{charToPitch(c), length};
 }
 
-Chord charToChord(char c, vector<int> degrees, float length) {
+Note charToNote(char c, vector<int> degrees, float length) {
     if (c == ' ' || c == ',' || c == '.') {
-        return Chord{length};
+        return Note{length};
     }
     int delta;
     if (c >= 'a' && c <= 'z') {
@@ -67,7 +67,7 @@ int main() {
     string speaker = "Aaron Copland";
     Track speakerTrack(3);
     for (int i = 0; i < speaker.length(); i++) {
-        speakerTrack << charToChord(speaker[i], { 0, 4, 9 }, WHOLE_LENGTH);
+        speakerTrack << charToNote(speaker[i], { 0, 4, 9 }, WHOLE_LENGTH);
     }
 
     string quote =

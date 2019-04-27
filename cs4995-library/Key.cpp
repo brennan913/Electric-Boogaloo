@@ -95,8 +95,8 @@ Pitch Scale::getPitch(int deg) const {
     return p;
 }
 
-Chord Scale::getChord(vector<int> degrees, float length) const {
-    Chord c{length};
+Note Scale::getChord(vector<int> degrees, float length) const {
+    Note c{length};
     for (int deg : degrees) {
         c << getPitch(deg);
     }

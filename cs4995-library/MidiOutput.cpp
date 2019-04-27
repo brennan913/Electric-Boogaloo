@@ -19,9 +19,9 @@ vector<uchar> getTempoMsg(int tempo) {
 // does not handle incrementing actionTime
 // TODO integer overflow checking
 void MidiOutput::writeNotes(
-    MidiFile& outputFile, Chord c, Track trk, int trackNum, int actionTime)
+    MidiFile& outputFile, Note note, Track trk, int trackNum, int actionTime)
 {
-    for (Pitch p : c.getPitches()) {
+    for (Pitch p : note.getPitches()) {
         vector<uchar> midievent = {
             NOTE_ON,
             static_cast<uchar>(p.toInt() + OCTAVE_WIDTH * trk.getOctave()),
@@ -33,7 +33,7 @@ void MidiOutput::writeNotes(
         midievent[0] = NOTE_OFF;
         outputFile.addEvent(
             trackNum + 1,
-            actionTime + TICKS_PER_QUARTER * c.getLength(),
+            actionTime + TICKS_PER_QUARTER * note.getLength(),
             midievent);
     }
 }
@@ -77,11 +77,11 @@ void MidiOutput::write(string filename) {
 
         // write all notes to midifile
         // if it's a rest, just increment actionTime
-        for (Chord c : trk.getChords()) {
-            if (!(c.isRest())) {
-                writeNotes(outputFile, c, trk, trackNum, actionTime);
+        for (Note note : trk.getNotes()) {
+            if (!(note.isRest())) {
+                writeNotes(outputFile, note, trk, trackNum, actionTime);
             }
-            actionTime += TICKS_PER_QUARTER * c.getLength();
+            actionTime += TICKS_PER_QUARTER * note.getLength();
         }
     }
     outputFile.sortTracks();

@@ -42,7 +42,7 @@ public:
     Pitch getPitch(int degree) const;
 
     // Constructs a chord from the specified degrees in a scale.
-    Chord getChord(vector<int> degrees, float length = DEFAULT_LENGTH) const;
+    Note getChord(vector<int> degrees, float length = DEFAULT_LENGTH) const;
 };
 
 } // namespace smf

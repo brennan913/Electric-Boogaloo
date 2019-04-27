@@ -27,11 +27,11 @@ int main() {
 
     Track piTrack;
     for (int i = 0; i < pi.length(); i++) {
-        piTrack << Chord{digitToPitch[pi[i]], SIXTEENTH_LENGTH};
+        piTrack << Note{digitToPitch[pi[i]], SIXTEENTH_LENGTH};
     }
     Track eTrack(3);
     for (int i = 0; i < e.length(); i++) {
-        eTrack << Chord{digitToPitch[e[i]]};
+        eTrack << Note{digitToPitch[e[i]]};
     }
 
     MidiOutput pieOut;

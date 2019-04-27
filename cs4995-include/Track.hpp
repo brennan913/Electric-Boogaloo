@@ -16,7 +16,7 @@ constexpr int DEFAULT_OCTAVE = 5;
 
 class Track {
 private:
-    vector<Chord> chords;
+    vector<Note> notes;
     int octave;
     int velocity;
 
@@ -28,7 +28,7 @@ public:
     Track(string str, int octave = DEFAULT_OCTAVE,
         int velocity = DEFAULT_VELOCITY);
 
-    const vector<Chord>& getChords() const;
+    const vector<Note>& getNotes() const;
     int getVelocity() const;
     void setVelocity(int v);
     int getOctave() const;
@@ -43,12 +43,12 @@ public:
     // Stretch or compress the note lengths of the Track by the given factor.
     void resize(float factor);
 
-    const Chord& operator[](int index) const;
-    Chord& operator[](int index);
+    const Note& operator[](int index) const;
+    Note& operator[](int index);
 
     // Operations for appending.
-    friend Track& operator<<(Track &trk, Chord c);
-    friend Track& operator<<(Track &trk, const vector<Chord> &c);
+    friend Track& operator<<(Track &trk, Note c);
+    friend Track& operator<<(Track &trk, const vector<Note> &c);
     friend Track& operator<<(Track &trk, string s);
 
     // Adding Tracks appends them to each other.

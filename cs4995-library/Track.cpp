@@ -7,8 +7,8 @@ using std::string;
 using std::vector;
 
 void Track::transformPitch(const map<int, int> &deltas) {
-    for (Chord &c : chords) {
-        c.transform(deltas);
+    for (Note &n : notes) {
+        n.transform(deltas);
     }
 }
 
@@ -20,7 +20,7 @@ Track::Track(string str, int octave, int velocity) :
     *this << str;
 }
 
-const vector<Chord>& Track::getChords() const { return chords; }
+const vector<Note>& Track::getNotes() const { return notes; }
 
 int Track::getVelocity() const { return velocity; }
 
@@ -31,8 +31,8 @@ int Track::getOctave() const { return octave; }
 void Track::setOctave(int o) { octave = o; }
 
 void Track::transpose(int delta) {
-    for (Chord &c : chords) {
-        c += delta;
+    for (Note &n : notes) {
+        n += delta;
     }
 }
 
@@ -41,29 +41,29 @@ void Track::modulate(const Scale &src, const Scale &dest) {
 }
 
 void Track::resize(float factor) {
-    for (Chord &c : chords) {
-        c.setLength(c.getLength() * factor);
+    for (Note &n : notes) {
+        n.setLength(n.getLength() * factor);
     }
 }
 
-const Chord& Track::operator[](int index) const { return chords[index]; }
+const Note& Track::operator[](int index) const { return notes[index]; }
 
-Chord& Track::operator[](int index) { return chords[index]; }
+Note& Track::operator[](int index) { return notes[index]; }
 
-Track& operator<<(Track &trk, Chord c) {
-    trk.chords.push_back(c);
+Track& operator<<(Track &trk, Note c) {
+    trk.notes.push_back(c);
     return trk;
 }
 
-Track& operator<<(Track &trk, const vector<Chord> &cv) {
-    trk.chords.reserve(trk.chords.size() + cv.size());
-    trk.chords.insert(trk.chords.end(), cv.begin(), cv.end());
+Track& operator<<(Track &trk, const vector<Note> &cv) {
+    trk.notes.reserve(trk.notes.size() + cv.size());
+    trk.notes.insert(trk.notes.end(), cv.begin(), cv.end());
     return trk;
 }
 
 Track& operator<<(Track &trk, string s) {
-    vector<Chord> chords = parseChords(s);
-    trk << chords;
+    vector<Note> notes = parseNotes(s);
+    trk << notes;
     return trk;
 }
 
@@ -71,8 +71,8 @@ Track& Track::operator+=(const Track &t2) {
     int octaveDiff = t2.octave - this->octave;
     Track temp{t2};
     temp.transpose(octaveDiff * OCTAVE_WIDTH);
-    for (Chord c : temp.chords) {
-        this->chords.push_back(c);
+    for (Note c : temp.notes) {
+        this->notes.push_back(c);
     }
     return *this;
 }
@@ -83,7 +83,7 @@ Track& Track::operator*=(int factor) {
         exit(1);
     }
     if (factor == 0) {
-        chords = vector<Chord>{};
+        notes = vector<Note>{};
     } else {
         Track temp = *this;
         for (int i = 0; i < factor - 1; i++) {

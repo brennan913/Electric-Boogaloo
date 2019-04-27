@@ -46,8 +46,8 @@ vector<string> tokenizeChordstr(string str) {
     return tokens;
 }
 
-vector<Chord> parseChords(string s) {
-    vector<Chord> result;
+vector<Note> parseNotes(string s) {
+    vector<Note> result;
 
     vector<string> tokens = tokenize(s, ' ');
     if (tokens.size() == 0) {
@@ -57,35 +57,33 @@ vector<Chord> parseChords(string s) {
     // reserve space >= the amount needed
     result.reserve(tokens.size());
 
-    float chordLength = DEFAULT_LENGTH;
+    float noteLength = DEFAULT_LENGTH;
     auto it = tokens.begin();
     while (it < tokens.end()) {
         string tok = *it;
-        Chord c{chordLength};
+        Note note{noteLength};
 
         if (tok[tok.length() - 1] == '(') {
             // Start specifying note length
             int subdivision = std::stoi(tok.substr(0, tok.length() - 1));
-            chordLength = WHOLE_LENGTH / subdivision;
+            noteLength = WHOLE_LENGTH / subdivision;
             ++it;
         } else if (tok.compare(")") == 0) {
             // Stop specifying note length
-            chordLength = DEFAULT_LENGTH;
+            noteLength = DEFAULT_LENGTH;
             ++it;
         } else {
-            if (it->compare(REST) == 0) {
-                // Do nothing; a chord without notes is a rest
-            } else {
-                // Construct chord using vector of pitches
+            if (it->compare(REST) != 0) {
+                // Construct a Note using vector of pitches
                 vector<string> pitchTokens = tokenizeChordstr(tok);
                 for (auto& pitchToken: pitchTokens) {
-                    c << Pitch{pitchToken};
+                    note << Pitch{pitchToken};
                 }
             }
             while(++it < tokens.end() && it->compare(EXTEND) == 0) {
-                c.setLength(c.getLength() + chordLength);
+                note.setLength(note.getLength() + noteLength);
             }
-            result.push_back(c);
+            result.push_back(note);
         }
     }
 

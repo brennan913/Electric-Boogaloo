@@ -16,10 +16,10 @@ namespace smf {
 
 vector<string> tokenize(string str, char delimiter);
 
-// Parse a token representing a Chord, e.g. CEG or C/E/G.
+// Parse a token representing a chord, e.g. CEG or C/E/G.
 vector<string> tokenizeChordstr(string str);
 
 // Parse a string representing a series of notes.
-vector<Chord> parseChords(string s);
+vector<Note> parseNotes(string s);
 
 } // namespace smf

@@ -26,7 +26,7 @@ private:
     int tempo;
     vector<Track> tracks;
 
-    void writeNotes(MidiFile& outputFile, Chord c, Track trk, int trackNum,
+    void writeNotes(MidiFile& outputFile, Note c, Track trk, int trackNum,
         int actionTime);
 
 public:

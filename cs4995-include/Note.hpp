@@ -18,37 +18,43 @@ constexpr float DEFAULT_LENGTH = QUARTER_LENGTH;
 using std::map;
 using std::vector;
 
-class Chord {
+/*
+ * A Note object can represent a single note, a chord (multiple notes played
+ * simultaneously), or a rest.
+ */
+class Note {
 private:
+    // Empty vector represents a rest, and a vector with more than one
+    // element represents a chord.
     vector<Pitch> pitches;
     float length;
 
 public:
 
-    // Constructs a chord out of a collection of Pitches.
-    Chord(const vector<Pitch> &pitches, float length = DEFAULT_LENGTH);
+    // Construct a chord out of a vector of Pitches.
+    Note(const vector<Pitch> &pitches, float length = DEFAULT_LENGTH);
 
     // Construct a single note.
-    Chord(Pitch pitch, float length = DEFAULT_LENGTH);
+    Note(Pitch pitch, float length = DEFAULT_LENGTH);
 
     // Construct an empty note, i.e. a rest.
-    Chord(float length = DEFAULT_LENGTH);
+    Note(float length = DEFAULT_LENGTH);
 
     vector<Pitch> getPitches();
     float getLength() const;
     void setLength(float l);
     bool isRest() const;
-    bool isNote() const;
+    bool isSingleNote() const;
     const Pitch& operator[](int index) const;
     Pitch& operator[](int index);
-    Chord& operator+=(int delta);
-    Chord& operator-=(int delta);
-    Chord& operator^=(int delta);
-    friend Chord operator+(const Chord &c, int delta);
-    friend Chord operator+(int delta, const Chord &p);
-    friend Chord operator-(const Chord &c, int delta);
-    friend Chord operator^(const Chord &c, int delta);
-    friend Chord& operator<<(Chord &c, Pitch p);
+    Note& operator+=(int delta);
+    Note& operator-=(int delta);
+    Note& operator^=(int delta);
+    friend Note operator+(const Note &c, int delta);
+    friend Note operator+(int delta, const Note &p);
+    friend Note operator-(const Note &c, int delta);
+    friend Note operator^(const Note &c, int delta);
+    friend Note& operator<<(Note &c, Pitch p);
 
     // Modify each Pitch represented by a key in the map. Each value
     // represents the delta for changing the corresponding Pitch.
