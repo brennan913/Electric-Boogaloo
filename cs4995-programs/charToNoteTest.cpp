@@ -78,9 +78,7 @@ int main() {
         quoteTrack << charToNote(quote[i], EIGHTH_LENGTH);
     }
 
-    MidiOutput out;
-    out.addTrack(speakerTrack);
-    out.addTrack(quoteTrack);
+    MidiOutput out{ {speakerTrack, quoteTrack} };
     out.modulate({A, MAJOR}, {C, MINOR});
     out.write("quote.mid");
     return 0;

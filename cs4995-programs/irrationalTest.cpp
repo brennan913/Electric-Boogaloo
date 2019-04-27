@@ -34,9 +34,7 @@ int main() {
         eTrack << Note{digitToPitch[e[i]]};
     }
 
-    MidiOutput pieOut;
-    pieOut.addTrack(piTrack);
-    pieOut.addTrack(eTrack);
+    MidiOutput pieOut{{ piTrack, eTrack }};
     pieOut.write("pie_major.mid");
     pieOut.modulate({C, MAJOR}, {C, MINOR});
     pieOut.write("pie_minor.mid");

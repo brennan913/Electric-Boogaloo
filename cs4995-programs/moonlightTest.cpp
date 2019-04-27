@@ -23,10 +23,7 @@ int main() {
     Track bass{"2( A/A^1 - - G/G^1 - - D/D^1 - - )", 2};
 
     // combine tracks
-    MidiOutput out;
-    out.setTempo(80);
-    out.addTrack(melody);
-    out.addTrack(bass);
+    MidiOutput out{ {melody, bass}, 80 };
 
     // write tracks
     out.write("moonlight.mid");

@@ -38,7 +38,12 @@ void MidiOutput::writeNotes(
     }
 }
 
-MidiOutput::MidiOutput(int tempo) : tempo(tempo) {}
+MidiOutput::MidiOutput(vector<Track> tracks, int tempo) :
+    tempo(tempo), tracks(tracks) {}
+
+MidiOutput::MidiOutput(Track trk, int tempo) : tempo(tempo) {
+    tracks.push_back(trk);
+}
 
 int MidiOutput::getTempo() { return tempo; }
 

@@ -12,8 +12,7 @@ int main() {
     melody << "4( C E G F ) 1( E ) 8( E/G/B E/G/B - - E D C C ) 1( . ) 3( A )";
 
     // combine tracks
-    MidiOutput out;
-    out.addTrack(melody);
+    MidiOutput out{ melody };
 
     // write tracks
     out.write("notesDiv.mid");

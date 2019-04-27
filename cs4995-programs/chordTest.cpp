@@ -13,8 +13,7 @@ int main() {
     melody << Scale{C, MAJOR}.getChord({ 0, 2, 4, 7, 9 }, WHOLE_LENGTH);
 
     // combine tracks
-    MidiOutput out;
-    out.addTrack(melody);
+    MidiOutput out{melody};
 
     // write tracks
     out.write("chords.mid");

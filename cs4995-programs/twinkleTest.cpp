@@ -27,16 +27,13 @@ int main() {
     out.modulate({F+1, MINOR}, {"C Db Eb F G Ab Bb"});
     out.write("twinkle_weird.mid");
 
-    MidiOutput thrice;
     Track t1 = melody + melody + 1 * bass;
     Track t2 = bass * 2 + melody + 0 * melody;
     t1.setVelocity(100);
     t2.setVelocity(50);
     t1.resize(0.5);
     t2.resize(0.5);
-    thrice.setTempo(60);
-    thrice.addTrack(t1);
-    thrice.addTrack(t2);
+    MidiOutput thrice{ {t1, t2}, 60 };
     thrice.write("twinkle_thrice.mid");
 
     return 0;

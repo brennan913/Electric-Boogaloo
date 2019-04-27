@@ -31,7 +31,9 @@ private:
 
 public:
 
-    MidiOutput(int tempo = 120);
+    MidiOutput(vector<Track> tracks = {}, int tempo = 120);
+
+    MidiOutput(Track trk, int tempo = 120);
 
     int getTempo();
 
