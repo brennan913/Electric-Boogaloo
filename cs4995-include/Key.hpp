@@ -16,6 +16,9 @@ const vector<int> MAJOR = { 0, 2, 4, 5, 7, 9, 11 };
 const vector<int> MINOR = { 0, 2, 3, 5, 7, 8, 11 };
 const vector<int> HARMONIC_MINOR = MINOR;
 const vector<int> NATURAL_MINOR = { 0, 2, 3, 5, 7, 8, 10 };
+const vector<int> PENTATONIC = { 0, 2, 4, 7, 9 };
+const vector<int> WHOLE_TONE = { 0, 2, 4, 6, 8, 10 };
+const vector<int> OCTATONIC = { 0, 2, 3, 5, 6, 8, 9, 11 };
 
 class Scale {
 private:

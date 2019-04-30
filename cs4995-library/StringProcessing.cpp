@@ -52,8 +52,8 @@ vector<Pitch> parsePitches(string str) {
     vector<string> tokens = tokenizeNotestr(str);
     vector<Pitch> pitches(tokens.size());
 
-    for (string tok : tokens) {
-        pitches.push_back(Pitch{tok});
+    for (int i = 0; i < tokens.size(); i++) {
+        pitches[i] = Pitch{tokens[i]};
     }
     return pitches;
 }

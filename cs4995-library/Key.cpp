@@ -90,8 +90,18 @@ const int& Scale::operator[](int index) const { return scaleDegrees[index]; }
 int& Scale::operator[](int index) { return scaleDegrees[index]; }
 
 Pitch Scale::getPitch(int deg) const {
-    Pitch p{scaleDegrees[deg % scaleDegrees.size()]};
-    p ^= deg / scaleDegrees.size();
+    if (deg < 0) {
+        int remainder = deg % size();
+        if (remainder < 0) {
+            remainder += size();
+        }
+        int octave = (deg - remainder) / size();
+        Pitch p{scaleDegrees[remainder]};
+        p ^= octave;
+        return p;
+    }
+    Pitch p{scaleDegrees[deg % size()]};
+    p ^= deg / size();
     return p;
 }
 
