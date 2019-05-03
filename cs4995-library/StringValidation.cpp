@@ -76,11 +76,4 @@ void validate_str_input(string str){
 	}
 }
 
-static void test(){
-	validate_str_input("4( C E G F ) 1( E ) 8( E/G/B E/G/B - - E D C C ) 1( . ) 3( A )");		
-
-	validate_str_input("4( C E G H ) 1( E ) 8( E/G/B E/G/B - - E D C C ) 1( . ) 3( A )");		
-	
-	validate_str_input("4( C E G F ) 1(E ) 8( E/G/B E/G/B - - E D C C ) 1( . ) 3( A )");		
-}
 
