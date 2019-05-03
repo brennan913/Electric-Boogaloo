@@ -1,5 +1,6 @@
 #include <string>
 #include "Track.hpp"
+#include <exception>
 
 namespace smf {
 
@@ -79,8 +80,7 @@ Track& Track::operator+=(const Track &t2) {
 
 Track& Track::operator*=(int factor) {
     if (factor < 0) {
-        std::cerr << "Invalid factor < 0 for operator*=.\n";
-        exit(1);
+        throw std::invalid_argument("Invalid factor < 0 for operator*=()");
     }
     if (factor == 0) {
         notes = vector<Note>{};

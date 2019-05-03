@@ -3,6 +3,7 @@
 #include <vector>
 #include <iostream>
 #include "StringProcessing.hpp"
+#include "StringValidation.hpp"
 
 using std::vector;
 using std::string;
@@ -60,6 +61,8 @@ vector<Pitch> parsePitches(string str) {
 
 vector<Note> parseNotes(string str) {
     vector<Note> result;
+
+    validate_str_input(str);
 
     vector<string> tokens = tokenize(str, ' ');
     if (tokens.size() == 0) {

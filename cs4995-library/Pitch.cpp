@@ -63,8 +63,7 @@ Pitch::Pitch(BasePitch base, int accidental, int octave) :
 
 Pitch::Pitch(string s) {
     if (s.length() == 0) {
-        std::cerr << "Invalid conversion from empty string to Pitch.\n";
-        exit(1);
+        throw std::invalid_argument("Invalid conversion from empty string to Pitch");
     }
     base = baseFromString(s);
     accidental = accidentalFromString(s);

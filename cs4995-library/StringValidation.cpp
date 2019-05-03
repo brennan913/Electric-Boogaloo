@@ -3,12 +3,13 @@
 #include <iostream>
 #include <unordered_set>
 #include <string>
+#include "StringValidation.hpp"
 
-Const unordered_set<char> VALID_CHARS{
+/*const std::unordered_set<char> VALID_CHARS{
 	' ','-','.','^','/','_','(',')','A','B','C','D','E','F','G','0',
 	'1','2','3','4','5','6','7','8','9','#','b'};
-
-bool validate_str_input(string str){
+*/
+void validate_str_input(string str){
 
 	
 	// first char must be A-G, 0-9
@@ -20,7 +21,7 @@ bool validate_str_input(string str){
 	bool inside_parens = false;
 	unsigned int len = str.length();
 	
-	for(unsigned int i; i<len; ++i){
+	for(unsigned int i=0; i<len; ++i){
 		
 
 		// input is constrained to specific characters
@@ -55,7 +56,13 @@ bool validate_str_input(string str){
 			"after space and before end of input");
 		}
 		// each '/' must be followed by one of A-G
-		if (str[i] == '/' && (i == len-1 || (str[i+1] 
+		if (str[i] == '/' && (i == len-1 || !(str[i+1] >= 'A' && str[i+1] <= 'G')) ){
+			throw std::invalid_argument("'/' must be followed by one of A-G");	
+		}
+		// . and - must be followed by space
+		if ( (str[i] == '.' || str[i] == '-') && i != len-1 && str[i+1] != ' '){
+			throw std::invalid_argument("tokens must be delimited by spaces");
+		}
 		// update parentheses status
 		if (inside_parens && str[i] == ')'){
 			inside_parens = false;
@@ -66,14 +73,14 @@ bool validate_str_input(string str){
 			throw std::invalid_argument(
 			"digits must be followed by space or parentheses");
 		}
-		//
-
-
 	}
 }
 
-int main(){
+static void test(){
+	validate_str_input("4( C E G F ) 1( E ) 8( E/G/B E/G/B - - E D C C ) 1( . ) 3( A )");		
 
+	validate_str_input("4( C E G H ) 1( E ) 8( E/G/B E/G/B - - E D C C ) 1( . ) 3( A )");		
+	
+	validate_str_input("4( C E G F ) 1(E ) 8( E/G/B E/G/B - - E D C C ) 1( . ) 3( A )");		
 }
-
 
