@@ -69,10 +69,18 @@ void validate_str_input(string str){
 		}
 		// digits must be followed by space or parentheses
 		if(str[i] >= '0' && str[i] <= '9' && 
-		    !( i == len-1 || str[i+1] == ' ' || str[i+1] == '(' ) ){
+		    !( i == len-1 || str[i+1] == ' ' || str[i+1] == '(' 
+		    || (str[i+1] >='0' && str[i+1] <= '9') 
+		    || str[i+1] == '/'
+		    
+		    ) ){
 			throw std::invalid_argument(
-			"digits must be followed by space or parentheses");
+			"digits must be followed by space or parentheses or slash");
 		}
+	}
+
+	if (inside_parens){
+		throw std::invalid_argument("unclosed parentheses");
 	}
 }
 
