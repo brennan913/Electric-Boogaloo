@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include "MidiOutput.hpp"
+#include <cassert>
 
 using std::vector;
 using namespace smf;
