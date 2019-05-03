@@ -3,6 +3,7 @@
 #include <set>
 #include <random>
 #include "MidiOutput.hpp"
+#include <cassert>
 
 using std::pair;
 using std::set;

@@ -1,4 +1,15 @@
 #include "MidiOutput.hpp"
+#include <exception>
+#include <climits>
+
+static void assert_no_uchar_overflow(int i){
+    if (i > UCHAR_MAX){
+	throw std::underflow_error(
+	    "provided integer values to write() exceed"
+	    "8-bit maximum for midifile event format"
+	    );
+    }
+}
 
 namespace smf {
 
@@ -17,12 +28,17 @@ vector<uchar> getTempoMsg(int tempo) {
 // writes notes from current collection of notes to midifile
 // does not assume single notes are a special case
 // does not handle incrementing actionTime
-// TODO integer overflow checking
 void MidiOutput::writeNotes(
     MidiFile& outputFile, Note note, Track trk, int trackNum, int actionTime)
 {
     for (Pitch p : note.getPitches()) {
-        vector<uchar> midievent = {
+
+	// if provided int values exceed uchar maximum, 
+	//throw exception to avoid overflow
+        assert_no_uchar_overflow(p.toInt() + OCTAVE_WIDTH * trk.getOctave());
+	assert_no_uchar_overflow(trk.getVelocity());
+
+	vector<uchar> midievent = {
             NOTE_ON,
             static_cast<uchar>(p.toInt() + OCTAVE_WIDTH * trk.getOctave()),
             static_cast<uchar>(trk.getVelocity())
@@ -71,6 +87,7 @@ void MidiOutput::modulate(const Scale &src, const Scale &dest) {
     }
 }
 
+// can throw std::overflow_error from writeNotes()
 void MidiOutput::write(string filename) {
     MidiFile outputFile;
     outputFile.absoluteTicks();

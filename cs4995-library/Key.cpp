@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include "Key.hpp"
+#include <exception>
 
 namespace smf {
 
@@ -9,13 +10,13 @@ using std::string;
 using std::vector;
 using std::map;
 
+
 template <typename KeyType, typename ValueType>
 map<KeyType, ValueType> generateMap(
     vector<KeyType> keys, vector<ValueType> values)
 {
     if (keys.size() != values.size()) {
-        std::cerr << "Different number of keys and values in generateMap().\n";
-        exit(1);
+	throw std::invalid_argument("Different number of keys and values in generateMap()");
     }
     map<KeyType, ValueType> m;
     for (int i = 0; i < keys.size(); i++) {
@@ -66,9 +67,10 @@ Scale::Scale(int key, const vector<int> &intervals) {
 
 map<int, int> Scale::createMappingTo(const Scale &s) const {
     if (scaleDegrees.size() != s.scaleDegrees.size()) {
-        std::cerr <<
-            "Different number of notes in scales in createMappingTo.\n";
-        exit(1);
+	throw std::invalid_argument(
+	    "Provided scales in createMappingTo()"
+	    "have different number of notes"
+	    );
     }
     vector<int> diffs;
     for (int i = 0; i < scaleDegrees.size(); i++) {
