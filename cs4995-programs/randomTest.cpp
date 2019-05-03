@@ -191,25 +191,25 @@ void testInversion(vector<int> current, vector<int> next) {
     std::cout << std::endl;
 }
 
-bool isDissonant(int degree, int degree2, int scaleSize) {
-    int diff =  abs(note - n) % scaleSize;
+bool isDissonant(int degree1, int degree2, int scaleSize) {
+    int diff =  abs(degree1 - degree2) % scaleSize;
     return (diff == 1 || diff == 6);
 }
 
-int dissonanceScore(int degree, vector<int> degreeVec, int scaleSize) {
+int dissonanceScore(int degree1, const vector<int> &degreeVec, int scaleSize) {
     int score = 0;
     for (int degree2 : degreeVec) {
-        if (isDissonant(degree, degree2, scaleSize)) score++;
+        if (isDissonant(degree1, degree2, scaleSize)) score++;
     }
     return score;
 }
 
 int dissonanceScore(
-    vector<int> degreeVec1, vector<int> degreeVec2, int scaleSize)
+    const vector<int> &degreeVec1, const vector<int> &degreeVec2, int scaleSize)
 {
     int score = 0;
     for (int degree : degreeVec1) {
-        score += dissonanceScore(n, notes2, scaleSize);
+        score += dissonanceScore(degree, degreeVec2, scaleSize);
     }
     return score;
 }

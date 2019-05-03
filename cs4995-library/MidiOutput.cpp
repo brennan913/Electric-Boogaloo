@@ -59,6 +59,12 @@ void MidiOutput::transpose(int delta) {
     }
 }
 
+void MidiOutput::resize(float factor) {
+    for (Track &trk : tracks) {
+        trk.resize(factor);
+    }
+}
+
 void MidiOutput::modulate(const Scale &src, const Scale &dest) {
     for (Track &trk : tracks) {
         trk.modulate(src, dest);

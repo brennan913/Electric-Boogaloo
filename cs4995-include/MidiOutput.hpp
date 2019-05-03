@@ -43,6 +43,8 @@ public:
 
     void transpose(int delta);
 
+    void resize(float factor);
+
     void modulate(const Scale &src, const Scale &dest);
 
     void write(string filename);

@@ -18,6 +18,7 @@ int main() {
     out.addTrack(bass);
 
     // write tracks
+    out.resize(0.5);
     out.write("twinkle_major.mid");
 
     // modulate and write
