@@ -65,7 +65,7 @@ console.log(write.dataUri());
 
 # Central Constructs 
 ## Pitch
-A `Pitch` is our elemental unit of music, closely tied to the lower-level midi format. A `Pitch` consists of:
+A `Pitch` is our elemental unit of music, closely tied to the lower-level MIDI format. A `Pitch` consists of:
 - a base pitch (the pitch’s place in an octave) - one of `"C", "D", "E", "F", "G", "A", "B"`
 - an accidental (an optional addition of sharpness or flatness) - `"#"` or `"b"`
 - and an octave (how high or low the octave of this pitch is) - `"^x"` or `"_x"`, where x is the number of octaves above or below
@@ -83,8 +83,8 @@ A `Note` is any single musical moment, and consists of one or more `Pitches`, an
 ## Track
 A `Track` is a single musical line, consisting of any number of `Notes`. `Tracks` can be layered on top of each other, and are implemented as a vector of `Notes`.
 
-## MidiOutput
-A `MidiOutput` is not directly connected to music theory, but handles the logic for converting a `Track` or multiple `Tracks` to MIDI-format files. `MidiOutputs` are where Electric Boogaloo interfaces with Midifile's existing MIDI writing utilities. 
+# Writing MIDI-format files
+`MidiOutput` handles the logic for converting a `Track` or multiple `Tracks` to MIDI-format files. `MidiOutputs` are where Electric Boogaloo interfaces with Midifile's existing MIDI writing utilities. 
 
 # Added Content
 
