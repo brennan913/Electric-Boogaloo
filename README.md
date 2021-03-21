@@ -2,7 +2,7 @@
 A string based language for representing musical notation using only ASCII characters. Created as a group project for Bjarne Stroustrup's "Design Using C++" course (COMS 4995) by Brennan Xavier McManus, Conder Shou, and Dean Deng. Implemented as an expansion of the C++11 MIDI-format parsing library [midifile](https://midifile.sapp.org/). A presentation summarizing the content below can be found [here](https://docs.google.com/presentation/d/1EE-DDxcoUErdAO15qPXVpA72CugJSXEge9kujGQXx34/edit?usp=sharing). 
 
 # Representing Music 
-Electric Boogaloo represents real musical concepts programmatically: program with `Notes` and `Keys`, not unsigned integers. It also provides a flexible, string-based input language for the representation of music. The following is an example of hot cross buns, written using each of Electric Boogaloo, the original Midifile, and MidiWriterJS.
+Electric Boogaloo represents real musical concepts programmatically: program with `Notes` and `Keys`, not unsigned integers. It also provides a flexible, string-based input language for the representation of music. The following is an example of how to write hot cross buns, written using each of Electric Boogaloo, the original Midifile, and MidiWriterJS.
 
 Electric boogaloo:
 ```cpp
@@ -20,7 +20,7 @@ int main() {
 }
 ```
 
-Midifile
+Midifile:
 ```cpp
 idiFile midifile;
    int track   = 0;
@@ -40,7 +40,7 @@ idiFile midifile;
    string filename = options.getString("output-file");
    midifile.write(filename);
 ```
-MidiWriterJS
+MidiWriterJS:
 ```js
 var MidiWriter = require('midi-writer-js');
 
