@@ -73,14 +73,18 @@ A `Pitch` is our elemental unit of music, closely tied to the lower-level midi f
 When this comes together, we can use this system to represent pitches like `“C^4”` and `“Eb_3”`
 
 ## Note
-A `Note` is any single musical moment, and consists of one or more `Pitches`, and a length. A `Note` can be:
-- a note in the traditional sense, like A or E♭ (`"A"` and `"Eb"`, respectively) 
-- a rest, 
-- or a chord. 
+A `Note` is any single musical moment, and consists of one or more `Pitches`, and a length. This represents the `Pitch` or `Pitches`, if any, that occur in the given moment, and how long the given moment lasts. A `Note` can be:
+- a note in the traditional sense, like A or E♭ (`"A"` and `"Eb"`, respectively)
+- a rest (represented with `"."`) 
+- or a chord, such as an A minor chord (written as `"A/C/E"` or `"ACE"`). 
 
-In our system, a `Note` of 
+`Notes` are implemented as a vector of `Pitches` and an integer length. 
+
 ## Track
+A `Track` is a single musical line, consisting of any number of `Notes`. `Tracks` can be layered on top of each other, and are implemented as a vector of `Notes`.
+
 ## MidiOutput
+A `MidiOutput` is not directly connected to music theory, but handles the logic for converting a `Track` or multiple `Tracks` to MIDI-format files. `MidiOutputs` are where Electric Boogaloo interfaces with Midifile's existing MIDI writing utilities. 
 
 # Added Content
 
